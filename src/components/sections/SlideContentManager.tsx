@@ -1,6 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { portfolioConfig } from "@/config/portfolioConfig";
 import {
   Github,
@@ -17,6 +19,11 @@ import {
   Download,
 } from "lucide-react";
 
+// Lazy-load the Three.js Signature 3D Centerpiece
+const R3FCenterpiece = dynamic(() => import("@/components/three/R3FCenterpiece"), {
+  ssr: false,
+});
+
 interface SlideContentManagerProps {
   currentSlideIndex: number;
   onNavigateSlide: (index: number) => void;
@@ -24,16 +31,20 @@ interface SlideContentManagerProps {
 }
 
 const slideVariants = {
-  initial: { opacity: 0, x: 30 },
+  initial: { opacity: 0, x: 45, rotateY: -6, scale: 0.95 },
   animate: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+    rotateY: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
-    x: -30,
-    transition: { duration: 0.25, ease: "easeIn" },
+    x: -45,
+    rotateY: 6,
+    scale: 0.95,
+    transition: { duration: 0.28, ease: "easeIn" },
   },
 };
 
@@ -52,10 +63,25 @@ export default function SlideContentManager({
   onNavigateSlide,
   onMenuHoverChange,
 }: SlideContentManagerProps) {
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const slide = portfolioConfig.slides[currentSlideIndex];
 
+  // Mouse 3D Card Tilt Math
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 8; // -4deg to 4deg
+      const y = (e.clientY / window.innerHeight - 0.5) * -8; // -4deg to 4deg
+      setTilt({ rotateX: y, rotateY: x });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <div className="fixed left-4 sm:left-12 lg:left-20 top-24 bottom-24 z-10 w-[92vw] sm:w-[45vw] max-w-[650px] flex items-center justify-start overflow-hidden pointer-events-none select-none">
+    <div
+      className="fixed left-4 sm:left-12 lg:left-20 top-24 bottom-24 z-10 w-[92vw] sm:w-[45vw] max-w-[650px] flex items-center justify-start overflow-hidden pointer-events-none select-none"
+      style={{ perspective: "1200px" }}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={slide.id}
@@ -63,30 +89,42 @@ export default function SlideContentManager({
           initial="initial"
           animate="animate"
           exit="exit"
-          className="w-full pointer-events-auto max-h-[80vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gta-yellow/30"
           style={{
+            rotateX: tilt.rotateX,
+            rotateY: tilt.rotateY,
             background: "rgba(13, 15, 20, 0.88)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            border: "1px solid rgba(255, 180, 0, 0.2)",
-            borderLeft: "4px solid rgba(255, 180, 0, 0.9)",
-            borderRadius: "16px",
-            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.6)",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
+            border: "1px solid rgba(255, 180, 0, 0.25)",
+            borderLeft: "4px solid rgba(255, 180, 0, 0.95)",
+            borderRadius: "18px",
+            boxShadow:
+              "0 12px 40px 0 rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 204, 0, 0.05)",
             padding: "1.75rem",
           }}
+          className="w-full pointer-events-auto max-h-[80vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gta-yellow/30 transition-transform duration-300 ease-out"
         >
           {/* ─── SLIDE 1: HERO / START GAME MENU ─── */}
           {slide.id === "hero" && (
             <div className="flex flex-col items-start justify-center">
-              <p className="font-hud text-xs text-gta-orange tracking-[0.3em] mb-1">
-                MISSION PASSED +RESPECT
-              </p>
-              <h2 className="font-gta text-3xl sm:text-5xl text-gta-yellow gta-glow leading-none mb-2">
-                {portfolioConfig.personal.name}
-              </h2>
-              <p className="font-hud text-gta-cyan text-xs sm:text-sm tracking-[0.2em] mb-5">
-                {portfolioConfig.personal.title}
-              </p>
+              <div className="w-full flex items-center justify-between">
+                <div>
+                  <p className="font-hud text-xs text-gta-orange tracking-[0.3em] mb-1">
+                    MISSION PASSED +RESPECT
+                  </p>
+                  <h2 className="font-gta text-3xl sm:text-5xl text-gta-yellow gta-glow leading-none mb-2">
+                    {portfolioConfig.personal.name}
+                  </h2>
+                  <p className="font-hud text-gta-cyan text-xs sm:text-sm tracking-[0.2em] mb-4">
+                    {portfolioConfig.personal.title}
+                  </p>
+                </div>
+
+                {/* Signature R3F 3D Interactive Centerpiece */}
+                <div className="hidden sm:block">
+                  <R3FCenterpiece />
+                </div>
+              </div>
 
               {/* Vertical Menu Tabs */}
               <div className="w-full space-y-2 border-t border-gta-yellow/20 pt-3">
@@ -96,7 +134,7 @@ export default function SlideContentManager({
                     onClick={() => onNavigateSlide(menuTargetIndex[item] ?? 1)}
                     onMouseEnter={() => onMenuHoverChange?.(true)}
                     onMouseLeave={() => onMenuHoverChange?.(false)}
-                    className="relative w-full text-left font-hud text-sm sm:text-lg text-white hover:text-gta-yellow px-4 py-2.5 rounded-xl transition-all duration-300 flex items-center justify-between group cursor-pointer overflow-hidden bg-black/40 hover:bg-gta-yellow/15 border border-transparent hover:border-gta-yellow/40"
+                    className="relative w-full text-left font-hud text-sm sm:text-lg text-white hover:text-gta-yellow px-4 py-2.5 rounded-xl transition-all duration-300 flex items-center justify-between group cursor-pointer overflow-hidden bg-black/40 hover:bg-gta-yellow/15 border border-transparent hover:border-gta-yellow/40 shadow-md"
                   >
                     <span className="absolute left-0 top-0 bottom-0 w-1 bg-gta-yellow opacity-0 group-hover:opacity-100 transition-all duration-300" />
                     <span className="tracking-wider flex items-center gap-2.5 relative z-10">
@@ -159,7 +197,7 @@ export default function SlideContentManager({
                 {slide.content?.stats?.map((stat) => (
                   <div
                     key={stat.label}
-                    className="bg-black/60 border border-white/15 p-3 rounded-xl flex flex-col justify-between"
+                    className="bg-black/60 border border-white/15 p-3 rounded-xl flex flex-col justify-between shadow-inner"
                   >
                     <span className="font-hud text-[9px] text-gta-gray tracking-widest">
                       {stat.label}

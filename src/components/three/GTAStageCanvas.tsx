@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface GTAStageCanvasProps {
   bgImage: string;
@@ -12,8 +13,8 @@ export default function GTAStageCanvas({ bgImage, scrollIndex }: GTAStageCanvasP
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 15;
-      const y = (e.clientY / window.innerHeight - 0.5) * 15;
+      const x = (e.clientX / window.innerWidth - 0.5) * 18;
+      const y = (e.clientY / window.innerHeight - 0.5) * 18;
       setMouseOffset({ x, y });
     };
     window.addEventListener("mousemove", handleMouseMove);
@@ -24,20 +25,45 @@ export default function GTAStageCanvas({ bgImage, scrollIndex }: GTAStageCanvasP
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-black select-none">
-      {/* Layer 0: Base Parallax Background (0.2x Parallax Speed) */}
+      {/* Directional Camera Scale Transition & Ken Burns Pan */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={imageSrc}
+          initial={{ scale: 1.15, opacity: 0, x: 20 }}
+          animate={{
+            scale: 1.05,
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+          }}
+          exit={{
+            scale: 0.98,
+            opacity: 0,
+            x: -20,
+            transition: { duration: 0.4, ease: "easeIn" },
+          }}
+          className="absolute -inset-12 bg-cover bg-center animate-ken-burns"
+          style={{
+            backgroundImage: `url(${imageSrc})`,
+            transform: `translate3d(${mouseOffset.x * 0.15}px, ${
+              mouseOffset.y * 0.15 - scrollIndex * 10
+            }px, 0)`,
+          }}
+        />
+      </AnimatePresence>
+
+      {/* Layered Vice City Neon Bloom Glow Overlay */}
       <div
-        className="absolute -inset-10 bg-cover bg-center transition-all duration-700 ease-out"
+        className="absolute inset-0 transition-opacity duration-500 z-[1]"
         style={{
-          backgroundImage: `url(${imageSrc})`,
-          transform: `translate3d(${mouseOffset.x * 0.2}px, ${
-            mouseOffset.y * 0.2 - scrollIndex * 15
-          }px, 0) scale(1.08)`,
+          background: `radial-gradient(circle at ${50 + mouseOffset.x * 0.5}% ${
+            50 + mouseOffset.y * 0.5
+          }%, rgba(255, 0, 128, 0.12) 0%, rgba(0, 255, 204, 0.08) 40%, rgba(0,0,0,0.85) 100%)`,
         }}
       />
 
-      {/* Layer 0 Dark Gradient & Vignette Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/85 z-[1]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(5,5,10,0.85)_100%)] z-[1]" />
+      {/* GTA Ambient Vignette & Contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-transparent to-black/85 z-[1]" />
     </div>
   );
 }
