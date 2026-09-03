@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
+import { FileText, Gamepad2 } from "lucide-react";
 import GTAHudOverlay from "@/components/hud/GTAHudOverlay";
 import SlideContentManager from "@/components/sections/SlideContentManager";
 import CharacterPortrait from "@/components/sections/CharacterPortrait";
+import RecruiterView from "@/components/recruiter/RecruiterView";
 import { portfolioConfig } from "@/config/portfolioConfig";
 
 const GTAStageCanvas = dynamic(() => import("@/components/three/GTAStageCanvas"), {
@@ -12,12 +14,72 @@ const GTAStageCanvas = dynamic(() => import("@/components/three/GTAStageCanvas")
 });
 
 export default function Home() {
+  const [isRecruiterMode, setIsRecruiterMode] = useState(false);
+  const [isTransitioningMode, setIsTransitioningMode] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
   const [showMissionFlash, setShowMissionFlash] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
   const totalSlides = portfolioConfig.slides.length;
   const activeSlide = portfolioConfig.slides[currentSlideIndex];
   const isTransitioning = useRef(false);
+
+  // Read URL params and viewport width on mount to set initial mode
+  useEffect(() => {
+    setMounted(true);
+    const params = new URLSearchParams(window.location.search);
+    const modeParam = params.get("mode");
+    const isMobile = window.innerWidth < 768;
+
+    if (modeParam === "recruiter" || (modeParam === null && isMobile)) {
+      setIsRecruiterMode(true);
+    }
+  }, []);
+
+  // Helper to pause audio & animation when leaving GTA mode
+  const pauseAudioAndCanvas = () => {
+    if (typeof document !== "undefined") {
+      const audioElements = document.querySelectorAll("audio");
+      audioElements.forEach((audio) => {
+        try {
+          audio.pause();
+        } catch (e) {
+          // ignore
+        }
+      });
+    }
+  };
+
+  // Mode Toggle Handler with URL synchronization & GTA entrance flourish
+  const handleToggleMode = useCallback(
+    (targetRecruiterMode: boolean) => {
+      if (targetRecruiterMode === isRecruiterMode) return;
+
+      if (!targetRecruiterMode) {
+        // Launching GTA Mode -> show entrance flourish
+        setIsTransitioningMode(true);
+        setTimeout(() => {
+          setIsRecruiterMode(false);
+          setIsTransitioningMode(false);
+        }, 600);
+      } else {
+        // Entering Recruiter Mode -> clean up audio/animations
+        pauseAudioAndCanvas();
+        setIsRecruiterMode(true);
+      }
+
+      // Update URL search parameters without triggering a full page reload
+      const url = new URL(window.location.href);
+      if (targetRecruiterMode) {
+        url.searchParams.set("mode", "recruiter");
+      } else {
+        url.searchParams.delete("mode");
+      }
+      window.history.replaceState({}, "", url.toString());
+    },
+    [isRecruiterMode]
+  );
 
   const navigateToSlide = useCallback(
     (newIndex: number) => {
@@ -29,8 +91,10 @@ export default function Home() {
     [totalSlides]
   );
 
-  // Wheel, keyboard & touch navigation
+  // Wheel, keyboard & touch navigation (ONLY active in GTA Mode)
   useEffect(() => {
+    if (isRecruiterMode) return;
+
     let touchStartY = 0;
 
     const handleWheel = (e: WheelEvent) => {
@@ -51,7 +115,6 @@ export default function Home() {
           const atBottom =
             target.scrollTop + target.clientHeight >= target.scrollHeight - 5 && delta > 0;
 
-          // If not at the boundary edge, allow element internal scroll and cancel slide change
           if (!atTop && !atBottom) {
             return;
           }
@@ -109,40 +172,86 @@ export default function Home() {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [currentSlideIndex, totalSlides, navigateToSlide]);
+  }, [isRecruiterMode, currentSlideIndex, totalSlides, navigateToSlide]);
+
+  if (!mounted) return null;
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-transparent select-none">
-      {/* Quick Mission Pass Flash Overlay */}
-      <div
-        className={`fixed inset-0 z-50 pointer-events-none bg-gta-yellow/15 transition-opacity duration-300 ${
-          showMissionFlash ? "opacity-100" : "opacity-0"
-        }`}
-      />
+    <div className="relative min-h-screen w-full">
+      {/* ─── Persistent Floating Mode Switcher Button (Top Right) ─── */}
+      {!isRecruiterMode ? (
+        <button
+          onClick={() => handleToggleMode(true)}
+          aria-label="Switch to Recruiter View"
+          className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/80 hover:bg-black backdrop-blur-md border border-gta-yellow/50 text-white font-hud text-xs sm:text-sm font-bold shadow-2xl transition-all duration-300 hover:scale-105 hover:border-gta-yellow active:scale-95 cursor-pointer"
+        >
+          <FileText size={16} className="text-gta-yellow" />
+          <span className="tracking-wider">📄 Recruiter / Clean View</span>
+        </button>
+      ) : (
+        <button
+          onClick={() => handleToggleMode(false)}
+          aria-label="Launch GTA Interactive Mode"
+          className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-900 backdrop-blur-md border border-amber-500/50 text-amber-300 font-sans text-xs sm:text-sm font-semibold shadow-2xl transition-all duration-300 hover:scale-105 hover:border-amber-400 active:scale-95 cursor-pointer"
+        >
+          <Gamepad2 size={16} className="text-amber-400" />
+          <span className="tracking-wider">🎮 Launch GTA Mode</span>
+        </button>
+      )}
 
-      {/* Layer 0: Master Fixed Background (z-index: 0) */}
-      <GTAStageCanvas bgImage={activeSlide.bgImage} scrollIndex={currentSlideIndex} />
+      {/* ─── Transition Flourish when Launching GTA Mode ─── */}
+      {isTransitioningMode && (
+        <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-center space-y-4 animate-fade-in">
+          <div className="font-gta text-3xl sm:text-4xl text-gta-yellow tracking-widest animate-pulse">
+            ENTERING GAME MODE
+          </div>
+          <div className="w-48 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-full bg-gta-yellow loading-bar" />
+          </div>
+          <p className="font-hud text-xs text-gta-cyan tracking-widest">
+            LOS SANTOS / BENGALURU EDITION
+          </p>
+        </div>
+      )}
 
-      {/* Layer 1: Pinned Character Portrait Cutout (z-index: 5) */}
-      <CharacterPortrait
-        isMenuHovered={isMenuHovered}
-        currentSlideIndex={currentSlideIndex}
-      />
+      {/* ─── View Rendering ─── */}
+      {isRecruiterMode ? (
+        <RecruiterView onSwitchToGTA={() => handleToggleMode(false)} />
+      ) : (
+        <main className="relative min-h-screen w-full overflow-hidden bg-transparent select-none">
+          {/* Quick Mission Pass Flash Overlay */}
+          <div
+            className={`fixed inset-0 z-50 pointer-events-none bg-gta-yellow/15 transition-opacity duration-300 ${
+              showMissionFlash ? "opacity-100" : "opacity-0"
+            }`}
+          />
 
-      {/* Layer 2: Slide Container / Left Content Area (z-index: 10, width: 45vw) */}
-      <SlideContentManager
-        currentSlideIndex={currentSlideIndex}
-        onNavigateSlide={navigateToSlide}
-        onMenuHoverChange={setIsMenuHovered}
-      />
+          {/* Layer 0: Master Fixed Background (z-index: 0) */}
+          <GTAStageCanvas bgImage={activeSlide.bgImage} scrollIndex={currentSlideIndex} />
 
-      {/* Layer 3: Persistent Global GTA HUD & Overlays (z-index: 20) */}
-      <GTAHudOverlay
-        currentSlideIndex={currentSlideIndex}
-        totalSlides={totalSlides}
-        activeObjective={activeSlide.objective}
-        onNavigateSlide={navigateToSlide}
-      />
-    </main>
+          {/* Layer 1: Pinned Character Portrait Cutout (z-index: 5) */}
+          <CharacterPortrait
+            isMenuHovered={isMenuHovered}
+            currentSlideIndex={currentSlideIndex}
+          />
+
+          {/* Layer 2: Slide Container / Left Content Area (z-index: 10, width: 45vw) */}
+          <SlideContentManager
+            currentSlideIndex={currentSlideIndex}
+            onNavigateSlide={navigateToSlide}
+            onMenuHoverChange={setIsMenuHovered}
+          />
+
+          {/* Layer 3: Persistent Global GTA HUD & Overlays (z-index: 20) */}
+          <GTAHudOverlay
+            currentSlideIndex={currentSlideIndex}
+            totalSlides={totalSlides}
+            activeObjective={activeSlide.objective}
+            onNavigateSlide={navigateToSlide}
+          />
+        </main>
+      )}
+    </div>
   );
 }
+
