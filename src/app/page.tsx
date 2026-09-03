@@ -14,7 +14,7 @@ const GTAStageCanvas = dynamic(() => import("@/components/three/GTAStageCanvas")
 });
 
 export default function Home() {
-  const [isRecruiterMode, setIsRecruiterMode] = useState(false);
+  const [isRecruiterMode, setIsRecruiterMode] = useState(true);
   const [isTransitioningMode, setIsTransitioningMode] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
@@ -25,14 +25,15 @@ export default function Home() {
   const activeSlide = portfolioConfig.slides[currentSlideIndex];
   const isTransitioning = useRef(false);
 
-  // Read URL params and viewport width on mount to set initial mode
+  // Read URL params on mount: default to Recruiter Mode unless ?mode=gta is specified
   useEffect(() => {
     setMounted(true);
     const params = new URLSearchParams(window.location.search);
     const modeParam = params.get("mode");
-    const isMobile = window.innerWidth < 768;
 
-    if (modeParam === "recruiter" || (modeParam === null && isMobile)) {
+    if (modeParam === "gta") {
+      setIsRecruiterMode(false);
+    } else {
       setIsRecruiterMode(true);
     }
   }, []);
@@ -71,8 +72,8 @@ export default function Home() {
 
       // Update URL search parameters without triggering a full page reload
       const url = new URL(window.location.href);
-      if (targetRecruiterMode) {
-        url.searchParams.set("mode", "recruiter");
+      if (!targetRecruiterMode) {
+        url.searchParams.set("mode", "gta");
       } else {
         url.searchParams.delete("mode");
       }
