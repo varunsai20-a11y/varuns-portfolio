@@ -24,26 +24,31 @@ export default function CharacterPortrait({
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Only render on Slide 0 (Hero) to prevent overlapping with other slide background images
+  // Only render on Slide 0 (Hero) to display the main character artwork portrait
   if (currentSlideIndex !== 0) return null;
 
   return (
-    <div className="fixed right-0 bottom-0 top-0 w-full sm:w-[50vw] max-w-[720px] pointer-events-none z-5 overflow-hidden flex items-end justify-end select-none">
+    <div className="fixed right-4 bottom-4 top-16 w-full sm:w-[48vw] max-w-[650px] pointer-events-none z-10 overflow-hidden flex items-end justify-end select-none">
       <motion.div
         animate={{
-          scale: isMenuHovered ? 1.03 : 1.0,
+          scale: isMenuHovered ? 1.04 : 1.0,
           filter: isMenuHovered
-            ? "drop-shadow(0 0 25px rgba(255, 204, 0, 0.4)) brightness(1.06)"
-            : "drop-shadow(0 0 15px rgba(0, 0, 0, 0.8)) brightness(1)",
+            ? "drop-shadow(0 0 30px rgba(245, 197, 24, 0.5)) brightness(1.08)"
+            : "drop-shadow(0 0 20px rgba(0, 0, 0, 0.9)) brightness(1)",
         }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="relative w-full h-[85vh] sm:h-[92vh] flex items-end justify-end transition-transform duration-500 ease-out"
+        className="relative w-full h-full flex items-end justify-end transition-transform duration-500 ease-out"
         style={{
           transform: `translate3d(${mouseOffset.x * 0.5}px, ${mouseOffset.y * 0.5}px, 0)`,
         }}
       >
+        <img
+          src="/api/assets/gta-me-poster.jpg"
+          alt="B Varun Sai GTA Character Artwork"
+          className="h-full max-h-[85vh] w-auto object-contain rounded-3xl border-2 border-gta-yellow/40 shadow-2xl"
+        />
         {/* Glow overlay for menu hover effect on Hero slide */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none rounded-3xl" />
       </motion.div>
     </div>
   );
