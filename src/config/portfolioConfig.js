@@ -24,15 +24,15 @@ export const portfolioConfig = {
   skillsWheel: [
     {
       category: "Heavy Firepower (Languages)",
-      items: ["Python", "Java", "Scala", "SQL", "JavaScript", "HTML/CSS"]
+      items: ["Java", "Python", "SQL", "JavaScript"]
     },
     {
-      category: "Specialized Tactical (Frameworks)",
-      items: ["React.js", "Node.js", "Flask", "REST APIs"]
+      category: "Specialized Tactical (Frameworks & Libraries)",
+      items: ["PyTorch", "TensorFlow", "Scikit-Learn", "OpenCV", "Pandas", "NumPy", "React.js", "Node.js", "Flask"]
     },
     {
-      category: "Tech Gear (Data & ML Libraries)",
-      items: ["Pandas", "NumPy", "Scikit-Learn", "OpenCV", "Leaflet Maps"]
+      category: "Tech Gear (Technologies & Tools)",
+      items: ["REST APIs", "HTML5", "CSS3", "Linux", "Git", "GitHub"]
     }
   ],
   missions: [

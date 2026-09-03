@@ -16,6 +16,7 @@ import {
   Code2,
   Sparkles,
 } from "lucide-react";
+import TechIcon from "@/components/ui/TechIcon";
 import { portfolioConfig } from "@/config/portfolioConfig";
 
 interface RecruiterViewProps {
@@ -46,23 +47,23 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
     localStorage.setItem("recruiter-theme-preference", nextTheme);
   };
 
-  // Structured skills categorization
+  // Structured skills categorization matching the latest resume
   const skillsCategories = [
     {
       title: "Languages",
-      skills: ["Python", "Java", "Scala", "SQL", "JavaScript", "HTML/CSS"],
+      skills: ["Java", "Python", "SQL", "JavaScript"],
     },
     {
-      title: "AI & ML Frameworks",
-      skills: ["Scikit-Learn", "OpenCV", "Pandas", "NumPy", "XGBoost", "NLP"],
+      title: "Frameworks & Libraries",
+      skills: ["PyTorch", "TensorFlow", "Scikit-Learn", "OpenCV", "Pandas", "NumPy", "React.js", "Node.js", "Flask"],
     },
     {
-      title: "Backend & Full-Stack",
-      skills: ["React.js", "Next.js", "Node.js", "Express", "Flask", "REST APIs"],
+      title: "Technologies",
+      skills: ["REST APIs", "HTML5", "CSS3"],
     },
     {
-      title: "Tools & Data Systems",
-      skills: ["MongoDB", "Leaflet Maps", "Streamlit", "Service Workers", "Git & GitHub", "Linux / Bash"],
+      title: "OS & Tools",
+      skills: ["Linux", "Git", "GitHub"],
     },
   ];
 
@@ -323,17 +324,18 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
                 <h3 className="font-semibold text-base mb-3 text-blue-500">
                   {cat.title}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   {cat.skills.map((skill, sIdx) => (
                     <span
                       key={sIdx}
-                      className={`text-xs font-medium px-3 py-1.5 rounded-md border ${
+                      className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all ${
                         isDark
-                          ? "bg-slate-800/80 border-slate-700/60 text-slate-200"
-                          : "bg-slate-100 border-slate-200 text-slate-800"
+                          ? "bg-slate-900/90 border-slate-800 text-slate-200 hover:border-blue-500/50 hover:bg-slate-800"
+                          : "bg-white border-slate-200 text-slate-800 shadow-sm hover:border-blue-400"
                       }`}
                     >
-                      {skill}
+                      <TechIcon name={skill} size={16} />
+                      <span>{skill}</span>
                     </span>
                   ))}
                 </div>
@@ -392,13 +394,14 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
                     {project.techStack.map((tech, tIdx) => (
                       <span
                         key={tIdx}
-                        className={`text-[11px] font-medium px-2 py-0.5 rounded ${
+                        className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-md ${
                           isDark
                             ? "bg-slate-800/90 text-slate-300 border border-slate-700/50"
                             : "bg-slate-100 text-slate-700 border border-slate-200"
                         }`}
                       >
-                        {tech}
+                        <TechIcon name={tech} size={13} />
+                        <span>{tech}</span>
                       </span>
                     ))}
                   </div>
