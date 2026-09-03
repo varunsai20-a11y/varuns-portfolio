@@ -19,16 +19,16 @@ export async function GET(
         "Content-Disposition": isPdf
           ? 'attachment; filename="B_Varun_Sai_Resume.pdf"'
           : "inline",
-        "Cache-Control": "public, max-age=31536000, immutable",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     });
   }
 
   // 2. Secondary fallback for local Windows absolute paths if running locally
   const LOCAL_FALLBACKS: Record<string, string> = {
-    "slide-hero.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788440168156.jpg",
-    "gta-me-poster.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788440168156.jpg",
-    "gta-me-depth.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788440168156.jpg",
+    "slide-hero.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\a5236813-3821-40cd-8253-800cc2ad8a87\\.user_uploaded\\media_1788460385650.png",
+    "gta-me-poster.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\a5236813-3821-40cd-8253-800cc2ad8a87\\.user_uploaded\\media_1788460385650.png",
+    "gta-me-depth.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\a5236813-3821-40cd-8253-800cc2ad8a87\\.user_uploaded\\media_1788460392516.png",
     "slide-about.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_about_1788374840380.jpg",
     "slide-skills.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_skills_1788375186335.jpg",
     "slide-projects.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_projects_1788375207848.jpg",

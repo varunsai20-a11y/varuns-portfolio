@@ -1,8 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Pricedown&family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pricedown&family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-oswald {
+  font-family: 'Oswald', sans-serif;
+}
 
 :root {
   --gta-yellow: #F5C518;
@@ -290,16 +294,114 @@ body {
 /* Ken Burns slow pan micro zoom */
 @keyframes kenBurns {
   0% {
-    transform: scale(1.05) translate(0px, 0px);
+    transform: scale(1.0) translate(0px, 0px);
   }
   50% {
-    transform: scale(1.12) translate(-10px, -8px);
+    transform: scale(1.02) translate(-4px, -3px);
   }
   100% {
-    transform: scale(1.05) translate(0px, 0px);
+    transform: scale(1.0) translate(0px, 0px);
   }
 }
 
 .animate-ken-burns {
   animation: kenBurns 16s ease-in-out infinite alternate;
 }
+
+/* ─── Cyberpunk Text Glitch Effect ─── */
+@keyframes text-glitch {
+  0% {
+    text-shadow: 2px 0 0 rgba(255, 0, 85, 0.7), -2px 0 0 rgba(0, 212, 255, 0.7);
+  }
+  25% {
+    text-shadow: -2px 0 0 rgba(255, 0, 85, 0.7), 2px 0 0 rgba(0, 212, 255, 0.7);
+  }
+  50% {
+    text-shadow: 1px -1px 0 rgba(245, 197, 24, 0.7), -1px 1px 0 rgba(255, 0, 85, 0.7);
+  }
+  75% {
+    text-shadow: -1px 1px 0 rgba(0, 212, 255, 0.7), 1px -1px 0 rgba(245, 197, 24, 0.7);
+  }
+  100% {
+    text-shadow: 2px 0 0 rgba(255, 0, 85, 0.7), -2px 0 0 rgba(0, 212, 255, 0.7);
+  }
+}
+
+.gta-glitch-hover:hover {
+  animation: text-glitch 0.25s linear infinite;
+}
+
+/* ─── Shimmer Light Sweep Effect ─── */
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.gta-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.gta-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+}
+
+.gta-shimmer:hover::after {
+  animation: shimmer-sweep 0.8s ease-in-out;
+}
+
+/* ─── Neon Border Pulse ─── */
+@keyframes neon-border-pulse {
+  0%, 100% {
+    border-color: rgba(245, 197, 24, 0.4);
+    box-shadow: 0 0 15px rgba(245, 197, 24, 0.15);
+  }
+  50% {
+    border-color: rgba(245, 197, 24, 0.9);
+    box-shadow: 0 0 30px rgba(245, 197, 24, 0.35);
+  }
+}
+
+.gta-neon-border {
+  animation: neon-border-pulse 3s ease-in-out infinite;
+}
+
+/* ─── Keyboard Hint Badge ─── */
+.hud-keybadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.45rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(245, 197, 24, 0.4);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: var(--gta-yellow);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.hud-keybadge:hover {
+  transform: translateY(-1px) scale(1.05);
+  border-color: var(--gta-yellow);
+  box-shadow: 0 0 8px rgba(245, 197, 24, 0.5);
+}
+

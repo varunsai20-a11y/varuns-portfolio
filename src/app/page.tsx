@@ -179,14 +179,14 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen w-full">
-      {/* ─── Persistent Floating Mode Switcher Button (Top Right) ─── */}
+      {/* ─── Persistent Floating Mode Switcher Button ─── */}
       {!isRecruiterMode ? (
         <button
           onClick={() => handleToggleMode(true)}
           aria-label="Switch to Recruiter View"
-          className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/80 hover:bg-black backdrop-blur-md border border-gta-yellow/50 text-white font-hud text-xs sm:text-sm font-bold shadow-2xl transition-all duration-300 hover:scale-105 hover:border-gta-yellow active:scale-95 cursor-pointer"
+          className="fixed top-[84px] left-4 z-50 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/85 hover:bg-black backdrop-blur-md border border-gta-yellow/40 text-white font-hud text-xs font-bold shadow-2xl transition-all duration-300 hover:scale-105 hover:border-gta-yellow active:scale-95 cursor-pointer"
         >
-          <FileText size={16} className="text-gta-yellow" />
+          <FileText size={14} className="text-gta-yellow" />
           <span className="tracking-wider">📄 Recruiter / Clean View</span>
         </button>
       ) : (

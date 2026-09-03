@@ -104,13 +104,13 @@ function DepthQuad() {
   useEffect(() => {
     const loader = new THREE.TextureLoader();
 
-    loader.load("/assets/gta-me-poster.jpg", (tex) => {
+    loader.load("/api/assets/gta-me-poster.jpg?v=new", (tex) => {
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
       uniforms.uImage.value = tex;
     });
 
-    loader.load("/assets/gta-me-depth.jpg", (tex) => {
+    loader.load("/api/assets/gta-me-depth.jpg?v=new", (tex) => {
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
       uniforms.uDepthMap.value = tex;

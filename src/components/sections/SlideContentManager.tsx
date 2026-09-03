@@ -68,7 +68,14 @@ export default function SlideContentManager({
 }: SlideContentManagerProps) {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [isLeetCodeOpen, setIsLeetCodeOpen] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const slide = portfolioConfig.slides[currentSlideIndex];
+
+  const handleCopyEmail = (email: string) => {
+    navigator.clipboard.writeText(email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   // Mouse 3D Card Tilt Math
   useEffect(() => {
@@ -83,7 +90,7 @@ export default function SlideContentManager({
 
   return (
     <div
-      className="fixed left-4 sm:left-12 lg:left-20 top-24 bottom-24 z-10 w-[92vw] sm:w-[45vw] max-w-[650px] flex items-center justify-start overflow-hidden pointer-events-none select-none"
+      className="fixed left-4 sm:left-12 lg:left-20 top-32 bottom-20 z-10 w-[92vw] sm:w-[45vw] max-w-[650px] flex items-center justify-start overflow-hidden pointer-events-none select-none"
       style={{ perspective: "1200px" }}
     >
       <AnimatePresence mode="wait">
@@ -96,15 +103,13 @@ export default function SlideContentManager({
           style={{
             rotateX: tilt.rotateX,
             rotateY: tilt.rotateY,
-            background: "rgba(13, 15, 20, 0.88)",
-            backdropFilter: "blur(18px)",
-            WebkitBackdropFilter: "blur(18px)",
-            border: "1px solid rgba(255, 180, 0, 0.25)",
-            borderLeft: "4px solid rgba(255, 180, 0, 0.95)",
-            borderRadius: "18px",
+            background: "rgba(12, 16, 22, 0.8)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
             boxShadow:
-              "0 12px 40px 0 rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 204, 0, 0.05)",
-            padding: "1.75rem",
+              "inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.8)",
+            borderRadius: "3px",
           }}
           onWheel={(e) => {
             const container = e.currentTarget;
@@ -116,20 +121,33 @@ export default function SlideContentManager({
               e.stopPropagation();
             }
           }}
-          className="w-full pointer-events-auto max-h-[80vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gta-yellow/30 transition-transform duration-300 ease-out"
+          className="w-full pointer-events-auto max-h-[82vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gta-yellow/30 transition-transform duration-300 ease-out relative rounded-[3px]"
         >
-          {/* ─── SLIDE 1: HERO / START GAME MENU ─── */}
+          {/* ─── SLIDE 1: HERO / GTA V INTERACTION MENU ─── */}
           {slide.id === "hero" && (
-            <div className="flex flex-col items-start justify-center">
-              <div className="w-full flex items-center justify-between">
-                <div>
-                  <p className="font-hud text-xs text-gta-orange tracking-[0.3em] mb-1">
-                    MISSION PASSED +RESPECT
-                  </p>
-                  <h2 className="font-gta text-3xl sm:text-5xl text-gta-yellow gta-glow leading-none mb-2">
+            <div className="flex flex-col items-start justify-center w-full">
+              {/* Solid Dark Header Bar */}
+              <div className="w-full bg-[#0D0E12] px-5 py-3.5 border-b border-white/12 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-2.5 h-2.5 bg-[#F5B800] rounded-[1px] animate-pulse" />
+                  <h2 className="font-gta text-2xl sm:text-3xl text-white tracking-widest leading-none uppercase">
                     {portfolioConfig.personal.name}
                   </h2>
-                  <p className="font-hud text-gta-cyan text-xs sm:text-sm tracking-[0.2em] mb-4">
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs text-[#000000] bg-[#85BB65] px-2.5 py-0.5 rounded-[2px] font-bold tracking-wider">
+                    {portfolioConfig.hud.cashAmount}
+                  </span>
+                </div>
+              </div>
+
+              {/* Subtitle & R3F Centerpiece Banner */}
+              <div className="w-full px-5 py-3.5 bg-black/30 border-b border-white/5 flex items-center justify-between">
+                <div>
+                  <p className="font-hud text-[10px] text-gta-orange tracking-[0.3em] uppercase">
+                    MISSION PASSED +RESPECT
+                  </p>
+                  <p className="font-oswald text-sm sm:text-base text-gta-cyan tracking-wider font-semibold mt-0.5">
                     {portfolioConfig.personal.title}
                   </p>
                 </div>
@@ -140,25 +158,24 @@ export default function SlideContentManager({
                 </div>
               </div>
 
-              {/* Vertical Menu Tabs */}
-              <div className="w-full space-y-2 border-t border-gta-yellow/20 pt-3">
+              {/* Menu Item Rows */}
+              <div className="w-full flex flex-col">
                 {slide.menuOptions?.map((item) => (
                   <button
                     key={item}
                     onClick={() => onNavigateSlide(menuTargetIndex[item] ?? 1)}
                     onMouseEnter={() => onMenuHoverChange?.(true)}
                     onMouseLeave={() => onMenuHoverChange?.(false)}
-                    className="relative w-full text-left font-hud text-sm sm:text-lg text-white hover:text-gta-yellow px-4 py-2.5 rounded-xl transition-all duration-300 flex items-center justify-between group cursor-pointer overflow-hidden bg-black/40 hover:bg-gta-yellow/15 border border-transparent hover:border-gta-yellow/40 shadow-md"
+                    className="group relative w-full text-left font-oswald text-base sm:text-lg tracking-[0.05em] font-bold px-5 py-3 transition-all duration-150 flex items-center justify-between cursor-pointer border-b border-white/[0.05] bg-[rgba(20,24,30,0.55)] text-white hover:bg-white hover:text-black border-l-0 hover:border-l-[4px] hover:border-l-[#F5B800] rounded-none"
                   >
-                    <span className="absolute left-0 top-0 bottom-0 w-1 bg-gta-yellow opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                    <span className="tracking-wider flex items-center gap-2.5 relative z-10">
+                    <span className="flex items-center gap-3 relative z-10 uppercase">
                       <ChevronRight
-                        size={16}
-                        className="text-gta-pink opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+                        size={18}
+                        className="text-[#F5B800] group-hover:text-black opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"
                       />
-                      {item}
+                      <span>{item}</span>
                     </span>
-                    <span className="text-[10px] text-gta-gray font-mono group-hover:text-gta-yellow relative z-10">
+                    <span className="text-xs font-mono text-white/50 group-hover:text-black font-bold tracking-wider relative z-10">
                       [SELECT]
                     </span>
                   </button>
@@ -166,12 +183,12 @@ export default function SlideContentManager({
               </div>
 
               {/* Social Quick Action Buttons */}
-              <div className="mt-5 pt-3 border-t border-white/10 w-full flex flex-wrap items-center gap-3">
+              <div className="p-4 bg-[#0D0E12]/80 border-t border-white/10 w-full flex flex-wrap items-center gap-3">
                 <a
                   href={portfolioConfig.personal.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-black/60 hover:bg-gta-yellow hover:text-black text-gta-yellow border border-gta-yellow/40 rounded-xl font-hud text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-lg"
+                  className="px-4 py-2 bg-black/60 hover:bg-[#F5B800] hover:text-black text-[#F5B800] border border-[#F5B800]/40 rounded-[2px] font-oswald text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-md font-bold"
                 >
                   <Github size={15} />
                   <span>GITHUB</span>
@@ -181,7 +198,7 @@ export default function SlideContentManager({
                   href={portfolioConfig.personal.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-black/60 hover:bg-gta-cyan hover:text-black text-gta-cyan border border-gta-cyan/40 rounded-xl font-hud text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-lg"
+                  className="px-4 py-2 bg-black/60 hover:bg-gta-cyan hover:text-black text-gta-cyan border border-gta-cyan/40 rounded-[2px] font-oswald text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-md font-bold"
                 >
                   <Linkedin size={15} />
                   <span>LINKEDIN</span>
@@ -192,7 +209,7 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 2: ABOUT ME ─── */}
           {slide.id === "about" && (
-            <div>
+            <div className="p-6">
               <div className="flex items-center gap-3 mb-4">
                 <Sparkles className="text-gta-yellow" size={22} />
                 <div>
@@ -235,7 +252,7 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 3: SKILLS ─── */}
           {slide.id === "skills" && (
-            <div>
+            <div className="p-6">
               <div className="flex items-center gap-3 mb-5">
                 <Cpu className="text-gta-cyan" size={22} />
                 <div>
@@ -273,7 +290,7 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 4: PROJECTS ─── */}
           {slide.id === "projects" && (
-            <div className="space-y-4">
+            <div className="p-6 space-y-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
                 <div>
                   <p className="font-hud text-[10px] text-gta-orange tracking-widest">
@@ -346,7 +363,7 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 5: EXPERIENCE ─── */}
           {slide.id === "experience" && (
-            <div>
+            <div className="p-6">
               <div className="flex items-center gap-3 mb-5">
                 <Briefcase className="text-gta-yellow" size={22} />
                 <div>
@@ -377,7 +394,7 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 6: ACHIEVEMENTS ─── */}
           {slide.id === "achievements" && (
-            <div>
+            <div className="p-6">
               <LeetCodeModal isOpen={isLeetCodeOpen} onClose={() => setIsLeetCodeOpen(false)} />
               <div className="flex items-center gap-3 mb-5">
                 <Trophy className="text-gta-yellow" size={22} />
@@ -446,7 +463,7 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 7: CONTACT ─── */}
           {slide.id === "contact" && (
-            <div className="text-center">
+            <div className="p-6 text-center">
               <p className="font-hud text-xs text-gta-orange tracking-[0.3em] mb-1">
                 SECURE LINE
               </p>
@@ -459,18 +476,30 @@ export default function SlideContentManager({
               </p>
 
               <div className="space-y-2.5 mb-5 text-left">
-                <a
-                  href={`mailto:${slide.contactInfo?.email}`}
-                  className="p-3 bg-black/60 border border-white/15 hover:border-gta-cyan rounded-xl flex items-center gap-3 transition-all cursor-pointer block"
+                <button
+                  onClick={() => handleCopyEmail(slide.contactInfo?.email || "varunsai.b77@gmail.com")}
+                  className="w-full p-3 bg-black/60 border border-white/15 hover:border-gta-cyan rounded-xl flex items-center justify-between gap-3 transition-all cursor-pointer group text-left"
                 >
-                  <Mail className="text-gta-cyan" size={16} />
-                  <div>
-                    <p className="font-hud text-[8px] text-gta-gray">EMAIL TRANSMISSION</p>
-                    <p className="font-hud text-xs sm:text-sm text-white">
-                      {slide.contactInfo?.email}
-                    </p>
+                  <div className="flex items-center gap-3">
+                    <Mail className="text-gta-cyan group-hover:scale-110 transition-transform" size={16} />
+                    <div>
+                      <p className="font-hud text-[8px] text-gta-gray">EMAIL TRANSMISSION (CLICK TO COPY)</p>
+                      <p className="font-hud text-xs sm:text-sm text-white">
+                        {slide.contactInfo?.email}
+                      </p>
+                    </div>
                   </div>
-                </a>
+                  {copiedEmail ? (
+                    <span className="font-hud text-[10px] text-gta-green font-bold bg-gta-green/20 border border-gta-green/40 px-2 py-0.5 rounded animate-bounce">
+                      COPIED!
+                    </span>
+                  ) : (
+                    <span className="font-hud text-[9px] text-gta-gray group-hover:text-gta-cyan transition-colors">
+                      [COPY]
+                    </span>
+                  )}
+                </button>
+
 
                 <a
                   href={`tel:${slide.contactInfo?.phone}`}

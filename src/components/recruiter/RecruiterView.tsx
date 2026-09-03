@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Sun,
   Moon,
@@ -15,9 +16,11 @@ import {
   Award,
   Code2,
   Sparkles,
+  Check,
 } from "lucide-react";
 import TechIcon from "@/components/ui/TechIcon";
 import { portfolioConfig } from "@/config/portfolioConfig";
+
 
 interface RecruiterViewProps {
   onSwitchToGTA: () => void;
@@ -172,7 +175,13 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
       {/* ─── Main Content Container ─── */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-16">
         {/* ─── Hero / Header Section ─── */}
-        <section id="hero" className="space-y-6 pt-4">
+        <motion.section
+          id="hero"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-6 pt-4"
+        >
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <span
@@ -297,10 +306,17 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
               <span>Email</span>
             </a>
           </div>
-        </section>
+        </motion.section>
 
         {/* ─── Skills Grid Section ─── */}
-        <section id="skills" className="space-y-6 pt-4 border-t border-slate-800/40">
+        <motion.section
+          id="skills"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6 pt-4 border-t border-slate-800/40"
+        >
           <div className="space-y-1">
             <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
               <Code2 size={22} className="text-blue-500" />
@@ -342,10 +358,17 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* ─── Featured Projects Section ─── */}
-        <section id="projects" className="space-y-6 pt-4 border-t border-slate-800/40">
+        <motion.section
+          id="projects"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6 pt-4 border-t border-slate-800/40"
+        >
           <div className="space-y-1">
             <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
               <Sparkles size={22} className="text-blue-500" />
@@ -437,10 +460,17 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* ─── Experience & Achievements Section ─── */}
-        <section id="experience" className="space-y-6 pt-4 border-t border-slate-800/40">
+        <motion.section
+          id="experience"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6 pt-4 border-t border-slate-800/40"
+        >
           <div className="space-y-1">
             <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
               <Briefcase size={22} className="text-blue-500" />
@@ -512,10 +542,17 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* ─── Contact Section ─── */}
-        <section id="contact" className="space-y-6 pt-4 border-t border-slate-800/40">
+        <motion.section
+          id="contact"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6 pt-4 border-t border-slate-800/40"
+        >
           <div
             className={`p-8 rounded-2xl border text-center space-y-4 ${
               isDark
@@ -553,7 +590,7 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
               </a>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* ─── Footer CTA (Handoff back to GTA Mode) ─── */}
         <footer className="pt-8 pb-12 border-t border-slate-800/40 text-center space-y-4">

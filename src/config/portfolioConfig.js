@@ -173,8 +173,8 @@ export const portfolioConfig = {
       title: "START GAME",
       subtitle: "Vice City / Bengaluru Edition",
       objective: "BUILD NEXT LEVEL DIGITAL EXPERIENCES",
-      bgImage: "/api/assets/slide-hero.jpg",
-      depthMap: "/assets/gta-me-depth.jpg",
+      bgImage: "/api/assets/slide-hero.jpg?v=new",
+      depthMap: "/api/assets/gta-me-depth.jpg?v=new",
       menuOptions: ["ABOUT ME", "SKILLS", "PROJECTS", "EXPERIENCE", "ACHIEVEMENTS", "ACADEMY", "CONTACT"]
     },
     {
