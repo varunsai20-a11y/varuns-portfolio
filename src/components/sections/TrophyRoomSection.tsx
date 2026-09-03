@@ -2,7 +2,8 @@
 
 import { useRef, useEffect, useState } from "react";
 import { portfolioConfig } from "@/config/portfolioConfig";
-import { Trophy, Award, Medal, BookOpen, Cloud, Swords } from "lucide-react";
+import { Trophy, Award, Medal, BookOpen, Cloud, Swords, Flame, ExternalLink } from "lucide-react";
+import LeetCodeModal from "@/components/modals/LeetCodeModal";
 
 const CATEGORY_ICONS: Record<string, typeof Trophy> = {
   Leadership: Trophy,
@@ -10,6 +11,7 @@ const CATEGORY_ICONS: Record<string, typeof Trophy> = {
   Hackathon: Swords,
   Datathon: Medal,
   Mentorship: Cloud,
+  LeetCode: Flame,
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -18,11 +20,13 @@ const CATEGORY_COLORS: Record<string, string> = {
   Hackathon: "text-gta-orange",
   Datathon: "text-gta-purple",
   Mentorship: "text-gta-blue",
+  LeetCode: "text-gta-orange",
 };
 
 export default function TrophyRoomSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [isLeetCodeOpen, setIsLeetCodeOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -44,6 +48,8 @@ export default function TrophyRoomSection() {
       id="trophies"
       className="relative min-h-screen flex flex-col items-center justify-center px-6 py-24"
     >
+      <LeetCodeModal isOpen={isLeetCodeOpen} onClose={() => setIsLeetCodeOpen(false)} />
+
       {/* Section Title */}
       <div
         className={`text-center mb-16 transition-all duration-700 ${
@@ -63,11 +69,17 @@ export default function TrophyRoomSection() {
           const Icon = CATEGORY_ICONS[achievement.category] || Award;
           const colorClass = CATEGORY_COLORS[achievement.category] || "text-gta-yellow";
           const isHovered = hoveredId === achievement.id;
+          const isLeetCode = achievement.category === "LeetCode" || achievement.isLeetCode;
 
           return (
             <div
               key={achievement.id}
+              onClick={() => {
+                if (isLeetCode) setIsLeetCodeOpen(true);
+              }}
               className={`trophy-badge rounded-lg overflow-hidden transition-all duration-500 ${
+                isLeetCode ? "cursor-pointer hover:border-gta-orange hover:shadow-lg hover:shadow-gta-orange/20" : ""
+              } ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
               }`}
               style={{ transitionDelay: `${idx * 120}ms` }}
@@ -114,9 +126,23 @@ export default function TrophyRoomSection() {
                 )}
 
                 {/* Details */}
-                <p className="font-body text-xs text-gray-400 leading-relaxed">
+                <p className="font-body text-xs text-gray-400 leading-relaxed mb-3">
                   {achievement.details}
                 </p>
+
+                {isLeetCode && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsLeetCodeOpen(true);
+                    }}
+                    className="w-full mt-2 py-1.5 px-3 bg-gta-orange/20 hover:bg-gta-orange hover:text-black border border-gta-orange/40 text-gta-orange font-hud text-[10px] tracking-wider rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold"
+                  >
+                    <Flame size={12} className="animate-pulse" />
+                    <span>INSPECT LIVE STATS</span>
+                    <ExternalLink size={12} />
+                  </button>
+                )}
               </div>
 
               {/* Bottom shimmer */}
@@ -157,3 +183,4 @@ export default function TrophyRoomSection() {
     </section>
   );
 }
+

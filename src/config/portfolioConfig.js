@@ -44,7 +44,7 @@ export const portfolioConfig = {
       description: "AI conversational chatbot delivering real-time sentiment analysis and buy/sell prediction for 100+ stock symbols.",
       techStack: ["Python", "NLP", "Streamlit", "XGBoost"],
       githubUrl: "https://github.com/varunsai20-a11y/stock-market-ai",
-      liveDemoUrl: "#",
+      liveDemoUrl: "https://stock-market-ai-nnijg8svkygdreuvvxusbg.streamlit.app/",
       difficulty: "Five Stars"
     },
     {
@@ -55,7 +55,7 @@ export const portfolioConfig = {
       description: "Adaptive LASSO feature selection benchmark over 50 training epochs on Ames Housing dataset with modular repo.",
       techStack: ["Python", "Scikit-Learn", "NumPy"],
       githubUrl: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project",
-      liveDemoUrl: "#",
+      liveDemoUrl: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project",
       difficulty: "Four Stars"
     },
     {
@@ -66,7 +66,7 @@ export const portfolioConfig = {
       description: "Smart tourism PWA with offline interactive maps, emergency SOS, and multilingual navigation for travelers.",
       techStack: ["JavaScript", "Leaflet Maps", "Service Workers"],
       githubUrl: "https://github.com/varunsai20-a11y/sih-2025",
-      liveDemoUrl: "#",
+      liveDemoUrl: "https://sih-2025-gamma.vercel.app/",
       difficulty: "Five Stars"
     },
     {
@@ -77,7 +77,7 @@ export const portfolioConfig = {
       description: "Full-stack real estate marketplace platform featuring property listings, search filters, interactive mapping, and user account management.",
       techStack: ["React.js", "Node.js", "Express", "MongoDB"],
       githubUrl: "https://github.com/varunsai20-a11y/propertyhub",
-      liveDemoUrl: "#",
+      liveDemoUrl: "https://propertyhub-coral.vercel.app/",
       difficulty: "Four Stars"
     }
   ],
@@ -131,6 +131,18 @@ export const portfolioConfig = {
       tagline: "Cloud Architecture & Services",
       details: "Hands-on mentorship covering cloud deployment & architecture.",
       category: "Mentorship"
+    },
+    {
+      id: "trophy-06",
+      badge: "LEETCODE 200+",
+      title: "200+ LeetCode Problems Solved",
+      organization: "LeetCode (@varun_s04)",
+      date: "Live Updates",
+      tagline: "Data Structures & Algorithms",
+      details: "Solved 200+ algorithmic challenges across Easy, Medium, and Hard topics with high acceptance rate.",
+      category: "LeetCode",
+      isLeetCode: true,
+      leetcodeUsername: "varun_s04"
     }
   ],
   experienceTimeline: [
@@ -212,28 +224,32 @@ export const portfolioConfig = {
           tag: "FINTECH / NLP",
           desc: "AI conversational chatbot delivering real-time sentiment analysis and buy/sell prediction for 100+ stock symbols.",
           tech: ["Python", "NLP", "Streamlit", "XGBoost"],
-          github: "https://github.com/varunsai20-a11y/stock-market-ai"
+          github: "https://github.com/varunsai20-a11y/stock-market-ai",
+          liveDemo: "https://stock-market-ai-nnijg8svkygdreuvvxusbg.streamlit.app/"
         },
         {
           title: "DYNAMIC SOFT-THRESHOLDING",
           tag: "RESEARCH / ML",
           desc: "Adaptive LASSO feature selection benchmark over 50 training epochs on Ames Housing dataset with modular repo.",
           tech: ["Python", "Scikit-Learn", "NumPy"],
-          github: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project"
+          github: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project",
+          liveDemo: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project"
         },
         {
           title: "SARATHI PLATFORM (SIH 2025)",
           tag: "PWA / SAFETY TECH",
           desc: "Smart tourism PWA with offline interactive maps, emergency SOS, and multilingual navigation for travelers.",
           tech: ["JavaScript", "Leaflet Maps", "Service Workers"],
-          github: "https://github.com/varunsai20-a11y/sih-2025"
+          github: "https://github.com/varunsai20-a11y/sih-2025",
+          liveDemo: "https://sih-2025-gamma.vercel.app/"
         },
         {
           title: "PROPERTYHUB PLATFORM",
           tag: "REAL ESTATE / FULL-STACK",
           desc: "Full-stack real estate marketplace platform featuring property listings, search filters, interactive mapping, and user account management.",
           tech: ["React.js", "Node.js", "Express", "MongoDB"],
-          github: "https://github.com/varunsai20-a11y/propertyhub"
+          github: "https://github.com/varunsai20-a11y/propertyhub",
+          liveDemo: "https://propertyhub-coral.vercel.app/"
         }
       ]
     },
@@ -316,6 +332,20 @@ export const portfolioConfig = {
           details: "Hands-on mentorship covering cloud deployment & architecture.",
           desc: "Hands-on mentorship covering cloud deployment & architecture.",
           category: "Mentorship"
+        },
+        {
+          id: "trophy-06",
+          badge: "LEETCODE 200+",
+          title: "200+ LeetCode Problems Solved",
+          org: "LeetCode (@varun_s04)",
+          organization: "LeetCode (@varun_s04)",
+          date: "Live Updates",
+          tagline: "Data Structures & Algorithms",
+          details: "Solved 200+ algorithmic challenges across Easy, Medium, and Hard topics with high acceptance rate.",
+          desc: "Solved 200+ algorithmic challenges across Easy, Medium, and Hard topics with high acceptance rate.",
+          category: "LeetCode",
+          isLeetCode: true,
+          leetcodeUsername: "varun_s04"
         }
       ]
     },

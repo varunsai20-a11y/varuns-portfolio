@@ -17,7 +17,10 @@ import {
   Sparkles,
   FileText,
   Download,
+  Flame,
+  ExternalLink,
 } from "lucide-react";
+import LeetCodeModal from "@/components/modals/LeetCodeModal";
 
 // Lazy-load the Three.js Signature 3D Centerpiece
 const R3FCenterpiece = dynamic(() => import("@/components/three/R3FCenterpiece"), {
@@ -64,6 +67,7 @@ export default function SlideContentManager({
   onMenuHoverChange,
 }: SlideContentManagerProps) {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+  const [isLeetCodeOpen, setIsLeetCodeOpen] = useState(false);
   const slide = portfolioConfig.slides[currentSlideIndex];
 
   // Mouse 3D Card Tilt Math
@@ -101,6 +105,16 @@ export default function SlideContentManager({
             boxShadow:
               "0 12px 40px 0 rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(255, 204, 0, 0.05)",
             padding: "1.75rem",
+          }}
+          onWheel={(e) => {
+            const container = e.currentTarget;
+            const atTop = container.scrollTop <= 5 && e.deltaY < 0;
+            const atBottom =
+              container.scrollTop + container.clientHeight >= container.scrollHeight - 5 &&
+              e.deltaY > 0;
+            if (!atTop && !atBottom) {
+              e.stopPropagation();
+            }
           }}
           className="w-full pointer-events-auto max-h-[80vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gta-yellow/30 transition-transform duration-300 ease-out"
         >
@@ -301,15 +315,29 @@ export default function SlideContentManager({
                       </div>
                     </div>
 
-                    <a
-                      href={proj.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-1.5 bg-gta-yellow/10 hover:bg-gta-yellow hover:text-black border border-gta-yellow/40 text-gta-yellow text-center font-hud text-xs tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-                    >
-                      <Github size={13} />
-                      <span>INSPECT CODE</span>
-                    </a>
+                    <div className="flex items-center gap-2 mt-2">
+                      <a
+                        href={proj.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 py-1.5 bg-gta-yellow/10 hover:bg-gta-yellow hover:text-black border border-gta-yellow/40 text-gta-yellow text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold"
+                      >
+                        <Github size={13} />
+                        <span>INSPECT CODE</span>
+                      </a>
+
+                      {(proj as any).liveDemo && (
+                        <a
+                          href={(proj as any).liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-1.5 bg-gta-cyan/15 hover:bg-gta-cyan hover:text-black border border-gta-cyan/40 text-gta-cyan text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold shadow-md hover:shadow-gta-cyan/20"
+                        >
+                          <ExternalLink size={13} />
+                          <span>LIVE DEMO</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -350,6 +378,7 @@ export default function SlideContentManager({
           {/* ─── SLIDE 6: ACHIEVEMENTS ─── */}
           {slide.id === "achievements" && (
             <div>
+              <LeetCodeModal isOpen={isLeetCodeOpen} onClose={() => setIsLeetCodeOpen(false)} />
               <div className="flex items-center gap-3 mb-5">
                 <Trophy className="text-gta-yellow" size={22} />
                 <div>
@@ -361,26 +390,56 @@ export default function SlideContentManager({
               </div>
 
               <div className="space-y-3">
-                {slide.trophies?.map((trophy) => (
-                  <div
-                    key={trophy.title}
-                    className="bg-black/60 border border-white/15 hover:border-gta-yellow p-3.5 rounded-xl transition-all"
-                  >
-                    <div className="flex justify-between items-start mb-1">
-                      <span className="bg-gta-yellow/20 text-gta-yellow font-hud text-[8px] px-2 py-0.5 rounded border border-gta-yellow/30 font-bold">
-                        🏆 {trophy.badge}
-                      </span>
-                      <span className="font-hud text-[9px] text-gta-gray">{trophy.date}</span>
+                {slide.trophies?.map((trophy: any) => {
+                  const isLeetCode = trophy.category === "LeetCode" || trophy.isLeetCode;
+                  return (
+                    <div
+                      key={trophy.title}
+                      onClick={() => {
+                        if (isLeetCode) setIsLeetCodeOpen(true);
+                      }}
+                      className={`bg-black/60 border p-3.5 rounded-xl transition-all ${
+                        isLeetCode
+                          ? "border-gta-orange/50 hover:border-gta-orange bg-black/80 cursor-pointer shadow-md hover:shadow-gta-orange/20"
+                          : "border-white/15 hover:border-gta-yellow"
+                      }`}
+                    >
+                      <div className="flex justify-between items-start mb-1">
+                        <span
+                          className={`font-hud text-[8px] px-2 py-0.5 rounded border font-bold ${
+                            isLeetCode
+                              ? "bg-gta-orange/20 text-gta-orange border-gta-orange/40"
+                              : "bg-gta-yellow/20 text-gta-yellow border-gta-yellow/30"
+                          }`}
+                        >
+                          🏆 {trophy.badge}
+                        </span>
+                        <span className="font-hud text-[9px] text-gta-gray">{trophy.date}</span>
+                      </div>
+                      <h4 className="font-hud text-xs sm:text-sm text-white font-bold mb-0.5">
+                        {trophy.title}
+                      </h4>
+                      <p className="font-hud text-[10px] text-gta-cyan mb-1">{trophy.org || trophy.organization}</p>
+                      <p className="font-body text-xs text-gray-300 leading-relaxed mb-2">
+                        {trophy.details || trophy.desc}
+                      </p>
+
+                      {isLeetCode && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsLeetCodeOpen(true);
+                          }}
+                          className="w-full mt-2 py-1.5 px-3 bg-gta-orange/20 hover:bg-gta-orange hover:text-black border border-gta-orange/40 text-gta-orange font-hud text-[10px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold"
+                        >
+                          <Flame size={13} className="animate-pulse" />
+                          <span>INSPECT LIVE STATS</span>
+                          <ExternalLink size={13} />
+                        </button>
+                      )}
                     </div>
-                    <h4 className="font-hud text-xs sm:text-sm text-white font-bold mb-0.5">
-                      {trophy.title}
-                    </h4>
-                    <p className="font-hud text-[10px] text-gta-cyan mb-1">{trophy.org}</p>
-                    <p className="font-body text-xs text-gray-300 leading-relaxed">
-                      {trophy.details || trophy.desc}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}

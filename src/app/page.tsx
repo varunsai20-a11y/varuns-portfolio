@@ -35,6 +35,30 @@ export default function Home() {
 
     const handleWheel = (e: WheelEvent) => {
       if (isTransitioning.current) return;
+
+      // Inspect if wheel event occurred inside a scrollable container
+      let target = e.target as HTMLElement | null;
+      while (target && target !== document.body) {
+        const style = window.getComputedStyle(target);
+        const overflowY = style.overflowY;
+        const isScrollable =
+          (overflowY === "auto" || overflowY === "scroll") &&
+          target.scrollHeight > target.clientHeight;
+
+        if (isScrollable) {
+          const delta = e.deltaY;
+          const atTop = target.scrollTop <= 5 && delta < 0;
+          const atBottom =
+            target.scrollTop + target.clientHeight >= target.scrollHeight - 5 && delta > 0;
+
+          // If not at the boundary edge, allow element internal scroll and cancel slide change
+          if (!atTop && !atBottom) {
+            return;
+          }
+        }
+        target = target.parentElement;
+      }
+
       if (Math.abs(e.deltaY) > 30) {
         isTransitioning.current = true;
         if (e.deltaY > 0) {
