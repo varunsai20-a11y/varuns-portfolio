@@ -35,8 +35,8 @@ export async function GET(
     "slide-experience.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_experience_1788375228052.jpg",
     "slide-achievements.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_achievements_1788375249433.jpg",
     "slide-contact.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_contact_1788375270528.jpg",
-    "B_Varun_Sai_Resume.pdf": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788439168910.pdf",
-    "resume.pdf": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788439168910.pdf"
+    "B_Varun_Sai_Resume.pdf": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\a5236813-3821-40cd-8253-800cc2ad8a87\\.user_uploaded\\media_1788462194141.pdf",
+    "resume.pdf": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\a5236813-3821-40cd-8253-800cc2ad8a87\\.user_uploaded\\media_1788462194141.pdf"
   };
 
   const localPath = LOCAL_FALLBACKS[assetName];
