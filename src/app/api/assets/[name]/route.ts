@@ -26,8 +26,9 @@ export async function GET(
 
   // 2. Secondary fallback for local Windows absolute paths if running locally
   const LOCAL_FALLBACKS: Record<string, string> = {
-    "slide-hero.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_varun_clean_1788374000607.jpg",
-    "gta-me-poster.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_varun_clean_1788374000607.jpg",
+    "slide-hero.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788440168156.jpg",
+    "gta-me-poster.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788440168156.jpg",
+    "gta-me-depth.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\c8e8141f-19b7-42e6-82ea-4bed10c33ed7\\.user_uploaded\\media_1788440168156.jpg",
     "slide-about.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_about_1788374840380.jpg",
     "slide-skills.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_skills_1788375186335.jpg",
     "slide-projects.jpg": "C:\\Users\\varun\\.gemini\\antigravity-ide\\brain\\ac608914-bc47-4a5b-9380-76fff69253ab\\gta_slide_projects_1788375207848.jpg",
