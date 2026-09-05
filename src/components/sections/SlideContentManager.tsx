@@ -345,13 +345,11 @@ export default function SlideContentManager({
 
                       {(proj as any).liveDemo && (
                         <a
-                          href={(proj as any).liveDemo}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href="#safehouse"
                           className="flex-1 py-1.5 bg-gta-cyan/15 hover:bg-gta-cyan hover:text-black border border-gta-cyan/40 text-gta-cyan text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold shadow-md hover:shadow-gta-cyan/20"
                         >
                           <ExternalLink size={13} />
-                          <span>LIVE DEMO</span>
+                          <span>REQUEST LIVE DEMO</span>
                         </a>
                       )}
                     </div>

@@ -447,12 +447,10 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
 
                   {project.liveDemoUrl && (
                     <a
-                      href={project.liveDemoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href="#contact"
                       className="flex items-center gap-1.5 text-xs font-semibold text-blue-500 hover:underline ml-auto"
                     >
-                      <span>Live App</span>
+                      <span>Request Live Demo</span>
                       <ExternalLink size={13} />
                     </a>
                   )}
