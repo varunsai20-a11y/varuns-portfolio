@@ -334,13 +334,11 @@ export default function SlideContentManager({
 
                     <div className="flex items-center gap-2 mt-2">
                       <a
-                        href={proj.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="#safehouse"
                         className="flex-1 py-1.5 bg-gta-yellow/10 hover:bg-gta-yellow hover:text-black border border-gta-yellow/40 text-gta-yellow text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold"
                       >
                         <Github size={13} />
-                        <span>INSPECT CODE</span>
+                        <span>REQUEST CODE</span>
                       </a>
 
                       {(proj as any).liveDemo && (

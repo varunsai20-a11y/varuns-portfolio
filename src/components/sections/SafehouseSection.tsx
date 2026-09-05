@@ -51,6 +51,13 @@ export default function SafehouseSection() {
       href: personal.linkedin,
       color: "text-gta-blue",
     },
+    {
+      icon: Smartphone,
+      label: "WHATSAPP",
+      value: "wa.me/8660224417",
+      href: "https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20connect%20regarding%20your%20projects.",
+      color: "text-gta-green",
+    },
   ];
 
   return (

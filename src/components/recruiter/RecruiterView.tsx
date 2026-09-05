@@ -433,15 +433,13 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
                 <div className="flex items-center gap-3 pt-5 mt-4 border-t border-slate-800/40">
                   {project.githubUrl && (
                     <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href="#contact"
                       className={`flex items-center gap-1.5 text-xs font-semibold hover:text-blue-500 transition-colors ${
                         isDark ? "text-slate-300" : "text-slate-700"
                       }`}
                     >
                       <Github size={14} />
-                      <span>Code Repository</span>
+                      <span>Request Code / GitHub</span>
                     </a>
                   )}
 
@@ -585,6 +583,18 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
                 }`}
               >
                 Connect on LinkedIn
+              </a>
+              <a
+                href="https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20connect%20regarding%20your%20projects."
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm border transition-colors ${
+                  isDark
+                    ? "bg-slate-800 border-slate-700 text-white hover:bg-slate-700"
+                    : "bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200"
+                }`}
+              >
+                Chat on WhatsApp
               </a>
             </div>
           </div>
