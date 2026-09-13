@@ -1,7 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, ChevronLeft, ChevronRight, Radio, DollarSign, Clock } from "lucide-react";
+import {
+  Star,
+  ChevronLeft,
+  ChevronRight,
+  Radio,
+  DollarSign,
+  Clock,
+  Github,
+  Linkedin,
+  FileText,
+  MapPin,
+  X,
+  ExternalLink,
+  Maximize2,
+  Compass,
+  Navigation,
+} from "lucide-react";
 import { portfolioConfig } from "@/config/portfolioConfig";
 
 interface GTAHudOverlayProps {
@@ -18,6 +34,7 @@ export default function GTAHudOverlay({
   onNavigateSlide,
 }: GTAHudOverlayProps) {
   const [timeString, setTimeString] = useState("16:13");
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const { personal, hud } = portfolioConfig;
 
   useEffect(() => {
@@ -31,6 +48,19 @@ export default function GTAHudOverlay({
     const interval = setInterval(updateClock, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  // Keyboard shortcut 'M' to toggle Tactical Map
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "m" || e.key === "M") {
+        setIsMapModalOpen((prev) => !prev);
+      } else if (e.key === "Escape" && isMapModalOpen) {
+        setIsMapModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMapModalOpen]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-20 select-none">
@@ -108,7 +138,10 @@ export default function GTAHudOverlay({
       </button>
 
       {/* ─── Bottom-Left Dynamic GTA V Objective Radar Minimap ─── */}
-      <GTAObjectiveMinimap currentSlideIndex={currentSlideIndex} />
+      <GTAObjectiveMinimap
+        currentSlideIndex={currentSlideIndex}
+        onOpenMapModal={() => setIsMapModalOpen(true)}
+      />
 
       {/* ─── Bottom-Center 7 Interactive Pagination Dots ─── */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-auto hidden md:flex items-center gap-2.5 bg-black/75 backdrop-blur-md px-4 py-2 rounded-full border border-gta-yellow/30 shadow-2xl z-20">
@@ -133,6 +166,7 @@ export default function GTAHudOverlay({
           <span className="hud-keybadge">← / →</span>
           <span className="hud-keybadge">SCROLL</span>
           <span className="hud-keybadge">1-7</span>
+          <span className="hud-keybadge bg-gta-yellow/20 text-gta-yellow border-gta-yellow/40">M (MAP)</span>
         </div>
 
         <div className="hidden lg:block text-right">
@@ -144,6 +178,18 @@ export default function GTAHudOverlay({
           </p>
         </div>
       </div>
+
+      {/* ─── GTA Tactical Satellite Map Modal Overlay ─── */}
+      {isMapModalOpen && (
+        <GTATacticalMapModal
+          currentSlideIndex={currentSlideIndex}
+          onClose={() => setIsMapModalOpen(false)}
+          onNavigateSlide={(index) => {
+            onNavigateSlide(index);
+            setIsMapModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -200,27 +246,36 @@ const MINIMAP_SLIDES: MinimapConfig[] = [
   },
 ];
 
-function GTAObjectiveMinimap({ currentSlideIndex }: { currentSlideIndex: number }) {
+function GTAObjectiveMinimap({
+  currentSlideIndex,
+  onOpenMapModal,
+}: {
+  currentSlideIndex: number;
+  onOpenMapModal: () => void;
+}) {
   const config = MINIMAP_SLIDES[currentSlideIndex] || MINIMAP_SLIDES[0];
   const playerX = 27;
   const playerY = 27;
+  const { personal } = portfolioConfig;
 
   return (
-    <div className="fixed bottom-4 left-4 z-30 pointer-events-auto flex items-center">
+    <div className="fixed bottom-4 left-4 z-30 pointer-events-auto flex flex-col gap-2">
       {/* ─── Outer Objective Container ─── */}
       <div
         className="flex items-center gap-3.5 px-3.5 py-2.5 rounded-[4px] border border-[#F1B916] max-w-[92vw] sm:max-w-xl transition-all duration-300"
         style={{
-          background: "rgba(10, 13, 18, 0.88)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
+          background: "rgba(10, 13, 18, 0.92)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
           boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 24px rgba(0, 0, 0, 0.7)",
         }}
       >
-        {/* ─── GTA V Radar Minimap (Left Side) ─── */}
+        {/* ─── GTA V Radar Minimap (Left Side - Clickable to expand) ─── */}
         <div className="relative shrink-0 flex items-center gap-2.5">
-          <div
-            className="relative w-[54px] h-[54px] rounded-full border-2 border-white overflow-hidden shrink-0"
+          <button
+            onClick={onOpenMapModal}
+            title="Click to open Full Tactical Map (Key: M)"
+            className="relative w-[54px] h-[54px] rounded-full border-2 border-white overflow-hidden shrink-0 cursor-pointer hover:border-gta-yellow hover:scale-105 transition-all group"
             style={{
               background: "radial-gradient(circle, #10212b 20%, #080f14 100%)",
               boxShadow: "0 0 10px rgba(0, 229, 255, 0.3)",
@@ -269,7 +324,12 @@ function GTAObjectiveMinimap({ currentSlideIndex }: { currentSlideIndex: number 
             <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 text-[9px] font-mono font-bold text-[#22C55E] z-30 leading-none drop-shadow">
               N
             </span>
-          </div>
+
+            {/* Hover overlay hint */}
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity z-40">
+              <Maximize2 size={16} className="text-gta-yellow" />
+            </div>
+          </button>
 
           {/* Health & Armor Gauges Stacked Beside Circle */}
           <div className="hidden sm:flex flex-col justify-center gap-1.5 w-10 shrink-0 border-r border-white/10 pr-2">
@@ -295,23 +355,68 @@ function GTAObjectiveMinimap({ currentSlideIndex }: { currentSlideIndex: number 
           </div>
         </div>
 
-        {/* ─── Objective Text Stack ─── */}
-        <div className="min-w-0 flex flex-col justify-center pr-1">
+        {/* ─── Objective Text Stack & Interactive Map Action Links ─── */}
+        <div className="min-w-0 flex flex-col justify-center pr-1 gap-1">
+          <div className="flex items-center justify-between gap-2">
+            <p
+              className="uppercase tracking-[2px] font-bold"
+              style={{
+                fontFamily: "'Chakra Petch', sans-serif",
+                fontSize: "11px",
+                color: "#EA580C",
+              }}
+            >
+              CURRENT OBJECTIVE
+            </p>
+
+            {/* Quick Action Badges */}
+            <div className="flex items-center gap-1.5">
+              <a
+                href={personal.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="GitHub Profile"
+                className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/60 border border-gta-yellow/40 hover:border-gta-yellow hover:bg-gta-yellow/20 text-gta-yellow text-[10px] font-mono transition-all"
+              >
+                <Github size={11} />
+                <span className="hidden sm:inline font-bold">GITHUB</span>
+              </a>
+              <a
+                href={personal.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LinkedIn Profile"
+                className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/60 border border-gta-cyan/40 hover:border-gta-cyan hover:bg-gta-cyan/20 text-gta-cyan text-[10px] font-mono transition-all"
+              >
+                <Linkedin size={11} />
+                <span className="hidden sm:inline font-bold">LINKEDIN</span>
+              </a>
+              <a
+                href={personal.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Download Resume"
+                className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/60 border border-white/40 hover:border-white hover:bg-white/20 text-white text-[10px] font-mono transition-all"
+              >
+                <FileText size={11} />
+                <span className="hidden sm:inline font-bold">RESUME</span>
+              </a>
+              <button
+                onClick={onOpenMapModal}
+                title="Open Full Tactical Map"
+                className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-gta-yellow/20 border border-gta-yellow hover:bg-gta-yellow hover:text-black text-gta-yellow text-[10px] font-mono transition-all cursor-pointer"
+              >
+                <MapPin size={11} />
+                <span className="font-bold">MAP</span>
+              </button>
+            </div>
+          </div>
+
           <p
-            className="uppercase tracking-[2px] font-bold"
-            style={{
-              fontFamily: "'Chakra Petch', sans-serif",
-              fontSize: "11px",
-              color: "#EA580C",
-            }}
-          >
-            CURRENT OBJECTIVE
-          </p>
-          <p
-            className="uppercase tracking-[1.5px] font-bold truncate leading-tight mt-0.5"
+            className="uppercase tracking-[1.5px] font-bold truncate leading-tight"
             style={{
               fontFamily: "'Oswald', 'Bebas Neue', sans-serif",
-              fontSize: "16px",
+              fontSize: "15px",
               color: "#FACC15",
               textShadow: "0 2px 4px rgba(0, 0, 0, 0.9)",
             }}
@@ -319,6 +424,326 @@ function GTAObjectiveMinimap({ currentSlideIndex }: { currentSlideIndex: number 
             {config.objectiveText}
           </p>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function GTATacticalMapModal({
+  currentSlideIndex,
+  onClose,
+  onNavigateSlide,
+}: {
+  currentSlideIndex: number;
+  onClose: () => void;
+  onNavigateSlide: (index: number) => void;
+}) {
+  const { personal, hud } = portfolioConfig;
+
+  const mapWaypoints = [
+    {
+      id: "github",
+      label: "GITHUB REPOSITORY DOSSIER",
+      type: "link",
+      url: personal.github,
+      x: 28,
+      y: 35,
+      icon: Github,
+      color: "#F1B916",
+      desc: personal.github,
+    },
+    {
+      id: "linkedin",
+      label: "LINKEDIN NETWORK FREQUENCY",
+      type: "link",
+      url: personal.linkedin,
+      x: 68,
+      y: 38,
+      icon: Linkedin,
+      color: "#38BDF8",
+      desc: personal.linkedin,
+    },
+    {
+      id: "resume",
+      label: "DOWNLOAD OPERATIVE RESUME (PDF)",
+      type: "link",
+      url: personal.resumeUrl,
+      x: 48,
+      y: 65,
+      icon: FileText,
+      color: "#22C55E",
+      desc: "B_Varun_Sai_Resume.pdf",
+    },
+    {
+      id: "hero",
+      label: "HQ — MAIN MENU & OVERVIEW",
+      type: "slide",
+      slideIndex: 0,
+      x: 20,
+      y: 20,
+      icon: Compass,
+      color: "#F1B916",
+      desc: "Hero Section",
+    },
+    {
+      id: "dossier",
+      label: "WAYPOINT A — OPERATIVE DOSSIER",
+      type: "slide",
+      slideIndex: 1,
+      x: 35,
+      y: 48,
+      icon: Navigation,
+      color: "#38BDF8",
+      desc: "About & Stats",
+    },
+    {
+      id: "arsenal",
+      label: "WAYPOINT B — TACTICAL ARSENAL",
+      type: "slide",
+      slideIndex: 2,
+      x: 52,
+      y: 25,
+      icon: Navigation,
+      color: "#22C55E",
+      desc: "Tech Skills Wheel",
+    },
+    {
+      id: "heists",
+      label: "WAYPOINT C — HEISTS & MISSIONS",
+      type: "slide",
+      slideIndex: 3,
+      x: 75,
+      y: 60,
+      icon: Navigation,
+      color: "#EF4444",
+      desc: "Projects Planning Board",
+    },
+    {
+      id: "waypoints",
+      label: "WAYPOINT D — FIELD OPERATIONS",
+      type: "slide",
+      slideIndex: 4,
+      x: 82,
+      y: 30,
+      icon: Navigation,
+      color: "#F1B916",
+      desc: "Experience & Timeline",
+    },
+    {
+      id: "trophies",
+      label: "WAYPOINT E — TROPHY ROOM",
+      type: "slide",
+      slideIndex: 5,
+      x: 30,
+      y: 78,
+      icon: Navigation,
+      color: "#A855F7",
+      desc: "Achievements & LeetCode",
+    },
+    {
+      id: "safehouse",
+      label: "WAYPOINT F — SAFEHOUSE CONTACT",
+      type: "slide",
+      slideIndex: 6,
+      x: 60,
+      y: 82,
+      icon: Navigation,
+      color: "#00E5FF",
+      desc: "Direct Transmission",
+    },
+  ];
+
+  return (
+    <div className="fixed inset-0 z-50 pointer-events-auto bg-black/92 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 animate-fadeIn">
+      {/* ─── Top Header Bar (GTA Pause Menu Header Style) ─── */}
+      <div className="flex items-center justify-between border-b-2 border-gta-yellow/50 pb-3">
+        <div className="flex items-center gap-3">
+          <div className="w-4 h-4 bg-gta-yellow animate-pulse rounded-sm" />
+          <div>
+            <h2 className="font-gta text-white text-xl sm:text-2xl tracking-wider leading-none">
+              TACTICAL SATELLITE MAP // {hud.radarLocation}
+            </h2>
+            <p className="font-hud text-[11px] text-gta-yellow tracking-[0.25em] mt-0.5">
+              INTERACTIVE OPERATIVE LINKS & FAST-TRAVEL WAYPOINTS
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-gta-red hover:text-white text-white/80 border border-white/20 rounded transition-all cursor-pointer"
+        >
+          <X size={18} />
+          <span className="font-hud text-xs tracking-widest font-bold">CLOSE (ESC)</span>
+        </button>
+      </div>
+
+      {/* ─── Main Content Area: Map Canvas Grid + Sidebar ─── */}
+      <div className="flex-1 my-4 grid grid-cols-1 lg:grid-cols-4 gap-4 overflow-hidden">
+        {/* Interactive Satellite Radar Map Grid (3 Cols on Desktop) */}
+        <div className="lg:col-span-3 relative bg-[#091118] rounded border border-gta-yellow/30 overflow-hidden flex items-center justify-center shadow-2xl group">
+          {/* Tactical Crosshatch Street Roads Background */}
+          <div
+            className="absolute inset-0 opacity-25"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(56, 189, 248, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.2) 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }}
+          />
+
+          {/* Faint Radar Rings */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+            <div className="w-[300px] h-[300px] rounded-full border border-gta-cyan" />
+            <div className="w-[600px] h-[600px] rounded-full border border-gta-cyan" />
+          </div>
+
+          {/* Compass Rose */}
+          <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-black/60 px-3 py-1.5 rounded border border-white/10 text-gta-green font-mono text-xs z-10">
+            <Compass size={16} className="animate-spin" style={{ animationDuration: "20s" }} />
+            <span>N 12.9716° // E 77.5946°</span>
+          </div>
+
+          {/* Interactive Map Waypoints */}
+          {mapWaypoints.map((wp) => {
+            const IconComp = wp.icon;
+            const isLink = wp.type === "link";
+            const isCurrentSlide = wp.type === "slide" && wp.slideIndex === currentSlideIndex;
+
+            return (
+              <div
+                key={wp.id}
+                className="absolute transform -translate-x-1/2 -translate-y-1/2 group/wp z-20"
+                style={{ left: `${wp.x}%`, top: `${wp.y}%` }}
+              >
+                {isLink ? (
+                  <a
+                    href={wp.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-1 cursor-pointer transition-all duration-200 hover:scale-125"
+                  >
+                    <div
+                      className="w-9 h-9 rounded-full flex items-center justify-center border-2 border-white shadow-[0_0_15px_rgba(241,185,22,0.8)] animate-pulse"
+                      style={{ backgroundColor: wp.color, color: "#000" }}
+                    >
+                      <IconComp size={18} strokeWidth={2.5} />
+                    </div>
+                    <span className="bg-black/90 text-white font-hud text-[10px] px-2 py-0.5 rounded border border-white/20 whitespace-nowrap shadow-lg tracking-wider group-hover/wp:border-gta-yellow group-hover/wp:text-gta-yellow">
+                      {wp.label} <ExternalLink size={10} className="inline ml-1" />
+                    </span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => wp.slideIndex !== undefined && onNavigateSlide(wp.slideIndex)}
+                    className="flex flex-col items-center gap-1 cursor-pointer transition-all duration-200 hover:scale-125"
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center border-2 ${
+                        isCurrentSlide
+                          ? "border-white bg-gta-yellow text-black shadow-[0_0_20px_#F1B916] scale-110"
+                          : "border-white/60 bg-black/80 text-white hover:border-gta-yellow"
+                      }`}
+                    >
+                      <IconComp size={14} />
+                    </div>
+                    <span
+                      className={`font-hud text-[9px] px-2 py-0.5 rounded border whitespace-nowrap shadow-lg tracking-wider ${
+                        isCurrentSlide
+                          ? "bg-gta-yellow text-black border-gta-yellow font-bold"
+                          : "bg-black/90 text-slate-300 border-white/20 hover:text-white"
+                      }`}
+                    >
+                      {wp.label}
+                    </span>
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Sidebar Legend & Direct Action Links */}
+        <div className="bg-[#0c141d] rounded border border-white/10 p-4 flex flex-col justify-between gap-4 overflow-y-auto">
+          <div>
+            <h3 className="font-gta text-gta-yellow text-lg tracking-wide border-b border-gta-yellow/30 pb-2 mb-3">
+              PRIMARY TARGET LINKS
+            </h3>
+
+            <div className="flex flex-col gap-2.5">
+              <a
+                href={personal.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 bg-black/60 hover:bg-gta-yellow/10 border border-gta-yellow/40 hover:border-gta-yellow rounded transition-all group"
+              >
+                <div className="flex items-center gap-2.5 text-gta-yellow">
+                  <Github size={18} />
+                  <div>
+                    <p className="font-hud text-xs font-bold tracking-wider group-hover:underline">
+                      GITHUB PROFILE
+                    </p>
+                    <p className="text-[10px] font-mono text-slate-400 truncate max-w-[170px]">
+                      {personal.github}
+                    </p>
+                  </div>
+                </div>
+                <ExternalLink size={14} className="text-gta-yellow" />
+              </a>
+
+              <a
+                href={personal.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 bg-black/60 hover:bg-gta-cyan/10 border border-gta-cyan/40 hover:border-gta-cyan rounded transition-all group"
+              >
+                <div className="flex items-center gap-2.5 text-gta-cyan">
+                  <Linkedin size={18} />
+                  <div>
+                    <p className="font-hud text-xs font-bold tracking-wider group-hover:underline">
+                      LINKEDIN NETWORK
+                    </p>
+                    <p className="text-[10px] font-mono text-slate-400 truncate max-w-[170px]">
+                      {personal.linkedin}
+                    </p>
+                  </div>
+                </div>
+                <ExternalLink size={14} className="text-gta-cyan" />
+              </a>
+
+              <a
+                href={personal.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 bg-black/60 hover:bg-white/10 border border-white/40 hover:border-white rounded transition-all group"
+              >
+                <div className="flex items-center gap-2.5 text-white">
+                  <FileText size={18} />
+                  <div>
+                    <p className="font-hud text-xs font-bold tracking-wider group-hover:underline">
+                      DOWNLOAD RESUME
+                    </p>
+                    <p className="text-[10px] font-mono text-slate-400">PDF DOSSIER</p>
+                  </div>
+                </div>
+                <ExternalLink size={14} className="text-white" />
+              </a>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-3">
+            <p className="font-hud text-[10px] text-slate-400 tracking-wider">
+              TIP: CLICK ANY WAYPOINT ON THE MAP TO TRAVEL DIRECTLY OR TRANSMIT INTEL.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Bottom Status Bar ─── */}
+      <div className="flex items-center justify-between border-t border-white/10 pt-2 text-[10px] font-mono text-slate-400">
+        <span>OPERATIVE: {personal.name.toUpperCase()}</span>
+        <span>STATUS: {personal.status}</span>
+        <span>LOCATION: {personal.location.toUpperCase()}</span>
       </div>
     </div>
   );
@@ -355,4 +780,5 @@ function WantedStars({ initialStars }: { initialStars: number }) {
     </div>
   );
 }
+
 

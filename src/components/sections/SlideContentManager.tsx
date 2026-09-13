@@ -15,6 +15,7 @@ import {
   Download,
   Flame,
   ExternalLink,
+  MessageSquare,
 } from "lucide-react";
 import LeetCodeModal from "@/components/modals/LeetCodeModal";
 import TechIcon from "@/components/ui/TechIcon";
@@ -299,28 +300,6 @@ export default function SlideContentManager({
                   </div>
                 ))}
               </div>
-
-              {/* Tech categories — bare list */}
-              <div className="mt-8 flex flex-col gap-3">
-                {portfolioConfig.skillsWheel.map((cat) => (
-                  <div key={cat.category}>
-                    <p className="font-hud text-[9px] text-gta-orange tracking-[0.25em] font-bold mb-1.5">
-                      {cat.category.toUpperCase()}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {cat.items.map((item) => (
-                        <span
-                          key={item}
-                          className="font-hud text-[9px] text-white/80 font-bold tracking-wider border border-white/15 px-2 py-0.5"
-                          style={{ textShadow: "0 1px 6px rgba(0,0,0,0.9)" }}
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           )}
 
@@ -394,32 +373,30 @@ export default function SlideContentManager({
                       ))}
                     </div>
 
-                    {/* Row 4: Actions — text links */}
+                    {/* Row 4: Actions — text links redirected to Safehouse / WhatsApp Appointment */}
                     <div className="flex items-center gap-5 flex-wrap">
                       <a
-                        href={proj.github}
+                        href={`https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20request%20code%20access%20/%20schedule%20appointment%20for%20project:%20${encodeURIComponent(proj.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 text-gta-yellow hover:text-white transition-colors"
                       >
-                        <Github size={13} />
+                        <MessageSquare size={13} />
                         <span className="font-hud text-[10px] tracking-widest font-bold">
-                          ► REQUEST CODE
+                          ► REQUEST CODE (WHATSAPP / SAFEHOUSE)
                         </span>
                       </a>
-                      {proj.liveDemo && (
-                        <a
-                          href={proj.liveDemo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-gta-cyan hover:text-white transition-colors"
-                        >
-                          <ExternalLink size={13} />
-                          <span className="font-hud text-[10px] tracking-widest font-bold">
-                            ► LIVE DEMO
-                          </span>
-                        </a>
-                      )}
+                      <a
+                        href={`https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20schedule%20a%20live%20demo%20appointment%20for:%20${encodeURIComponent(proj.title)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-gta-cyan hover:text-white transition-colors"
+                      >
+                        <ExternalLink size={13} />
+                        <span className="font-hud text-[10px] tracking-widest font-bold">
+                          ► SCHEDULE LIVE DEMO
+                        </span>
+                      </a>
                     </div>
                   </div>
                 ))}
@@ -477,30 +454,6 @@ export default function SlideContentManager({
                       </p>
                     </div>
                   ))}
-
-                  {/* Certifications row */}
-                  <div className="relative">
-                    <div
-                      className="absolute -left-[26px] top-1 w-3 h-3 rounded-full bg-gta-cyan border border-black"
-                      style={{ boxShadow: "0 0 10px rgba(0,212,255,0.7)" }}
-                    />
-                    <p className="font-hud text-[10px] text-gta-orange tracking-widest font-bold mb-2">
-                      CERTIFICATIONS
-                    </p>
-                    <div className="flex flex-col gap-1.5">
-                      {portfolioConfig.certifications.map((cert) => (
-                        <div key={cert.title} className="flex items-start gap-2">
-                          <span className="text-gta-yellow mt-0.5 shrink-0 font-hud text-[10px]">►</span>
-                          <div>
-                            <p className="font-hud text-[11px] text-white/90 font-bold" style={{ textShadow: "0 1px 8px rgba(0,0,0,0.9)" }}>
-                              {cert.title}
-                            </p>
-                            <p className="font-hud text-[9px] text-white/45 font-bold">{cert.issuer}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
