@@ -38,7 +38,8 @@ export default function GTAHudOverlay({
       <div className="absolute top-4 left-4 right-4 flex items-start justify-between">
         {/* Top-Left Logo Title */}
         <div
-          className="pointer-events-auto cursor-pointer p-3 bg-black/70 backdrop-blur-md border border-gta-yellow/30 rounded-2xl shadow-xl hover:border-gta-yellow transition-all"
+          className="pointer-events-auto cursor-pointer px-4 py-3 bg-black/80 backdrop-blur-md border border-gta-yellow/25 shadow-xl hover:border-gta-yellow transition-all"
+          style={{ borderRadius: "2px" }}
           onClick={() => onNavigateSlide(0)}
         >
           <h1 className="font-gta text-white tracking-wider text-xl sm:text-2xl flex items-baseline gap-2 leading-none">

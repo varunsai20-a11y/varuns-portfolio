@@ -405,3 +405,44 @@ body {
   box-shadow: 0 0 8px rgba(245, 197, 24, 0.5);
 }
 
+/* ─── GTA Scene Text — legibility over cinematic backgrounds ─── */
+.gta-scene-text {
+  text-shadow:
+    0 1px 12px rgba(0, 0, 0, 0.95),
+    0 2px 6px rgba(0, 0, 0, 0.85);
+}
+
+/* ─── GTA Scrollbar — thin, no background track ─── */
+.gta-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 197, 24, 0.35) transparent;
+}
+
+.gta-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.gta-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gta-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(245, 197, 24, 0.35);
+  border-radius: 0;
+}
+
+/* ─── Scanlines — GTA Mode only ─── */
+.gta-scene-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.025) 0px,
+    rgba(0, 0, 0, 0.025) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 9997;
+}

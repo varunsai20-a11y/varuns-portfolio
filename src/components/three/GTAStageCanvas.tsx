@@ -25,22 +25,20 @@ export default function GTAStageCanvas({ bgImage, scrollIndex }: GTAStageCanvasP
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-black select-none">
-      {/* Directional Camera Scale Transition & Ken Burns Pan */}
+      {/* Cinematic Background Image — Ken Burns + parallax */}
       <AnimatePresence mode="wait">
         <motion.div
           key={imageSrc}
-          initial={{ scale: 1.03, opacity: 0, x: 10 }}
+          initial={{ scale: 1.04, opacity: 0 }}
           animate={{
             scale: 1.0,
             opacity: 1,
-            x: 0,
-            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+            transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
           }}
           exit={{
-            scale: 0.98,
+            scale: 0.97,
             opacity: 0,
-            x: -10,
-            transition: { duration: 0.35, ease: "easeIn" },
+            transition: { duration: 0.4, ease: "easeIn" },
           }}
           className="absolute inset-0 bg-cover bg-[position:65%_center] sm:bg-[position:70%_center] animate-ken-burns"
           style={{
@@ -52,21 +50,35 @@ export default function GTAStageCanvas({ bgImage, scrollIndex }: GTAStageCanvasP
         />
       </AnimatePresence>
 
-      {/* Layered Vice City Neon Bloom Glow Overlay */}
+      {/* Left-edge text readability gradient — fades to transparent right */}
       <div
-        className="absolute inset-0 transition-opacity duration-500 z-[1]"
+        className="absolute inset-0 z-[1] pointer-events-none"
         style={{
-          background: `radial-gradient(circle at ${50 + mouseOffset.x * 0.5}% ${
-            50 + mouseOffset.y * 0.5
-          }%, rgba(255, 0, 128, 0.12) 0%, rgba(0, 255, 204, 0.08) 40%, rgba(0,0,0,0.85) 100%)`,
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.60) 28%, rgba(0,0,0,0.20) 52%, transparent 72%)",
         }}
       />
 
-      {/* Atmospheric Floating Ambient Particles Canvas */}
-      <ParticleCanvas scrollIndex={scrollIndex} mouseOffset={mouseOffset} />
+      {/* Top atmospheric darkness */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 30%, transparent 65%, rgba(0,0,0,0.75) 100%)",
+        }}
+      />
 
-      {/* GTA Ambient Vignette & Contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-transparent to-black/85 z-[1]" />
+      {/* Subtle Vice City atmospheric colour bloom */}
+      <div
+        className="absolute inset-0 transition-opacity duration-500 z-[1] pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at ${60 + mouseOffset.x * 0.3}% ${
+            45 + mouseOffset.y * 0.3
+          }%, rgba(255, 20, 100, 0.07) 0%, rgba(0, 200, 255, 0.04) 45%, transparent 70%)`,
+        }}
+      />
+
+      {/* Floating ambient particles */}
+      <ParticleCanvas scrollIndex={scrollIndex} mouseOffset={mouseOffset} />
     </div>
   );
 }
@@ -95,23 +107,23 @@ function ParticleCanvas({
     };
     window.addEventListener("resize", handleResize);
 
-    const particleCount = 45;
+    const particleCount = 40;
     const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 2 + 0.8,
-      speedX: (Math.random() - 0.5) * 0.4,
-      speedY: -Math.random() * 0.5 - 0.2,
-      opacity: Math.random() * 0.6 + 0.2,
-      color: Math.random() > 0.4 ? "#F5C518" : "#00D4FF",
+      radius: Math.random() * 1.5 + 0.5,
+      speedX: (Math.random() - 0.5) * 0.35,
+      speedY: -Math.random() * 0.4 - 0.15,
+      opacity: Math.random() * 0.5 + 0.15,
+      color: Math.random() > 0.45 ? "#F5C518" : "#00D4FF",
     }));
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p) => {
-        p.x += p.speedX + mouseOffset.x * 0.02;
-        p.y += p.speedY + mouseOffset.y * 0.02 - scrollIndex * 0.05;
+        p.x += p.speedX + mouseOffset.x * 0.015;
+        p.y += p.speedY + mouseOffset.y * 0.015 - scrollIndex * 0.04;
 
         if (p.y < 0) {
           p.y = height;
@@ -123,7 +135,7 @@ function ParticleCanvas({
         ctx.save();
         ctx.globalAlpha = p.opacity;
         ctx.fillStyle = p.color;
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = 8;
         ctx.shadowColor = p.color;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -145,8 +157,7 @@ function ParticleCanvas({
   return (
     <canvas
       id="gta-particle-canvas"
-      className="absolute inset-0 z-[1] pointer-events-none opacity-80"
+      className="absolute inset-0 z-[2] pointer-events-none opacity-70"
     />
   );
 }
-
