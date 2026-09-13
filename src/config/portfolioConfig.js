@@ -49,14 +49,14 @@ export const portfolioConfig = {
     },
     {
       id: "heist-02",
-      title: "DYNAMIC SOFT-THRESHOLDING",
-      category: "RESEARCH / ML",
-      tagline: "Dynamic Adaptive LASSO Benchmark",
-      description: "Adaptive LASSO feature selection benchmark over 50 training epochs on Ames Housing dataset with modular repo.",
-      techStack: ["Python", "Scikit-Learn", "NumPy"],
-      githubUrl: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project",
-      liveDemoUrl: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project",
-      difficulty: "Four Stars"
+      title: "DATALENS PLATFORM",
+      category: "DATA RELIABILITY / AI PIPELINES",
+      tagline: "Automated Data Quality & Drift Engine",
+      description: "Automated data reliability, distribution drift detection, dataset quality scoring, and AI-driven statistical interpretation platform.",
+      techStack: ["TypeScript", "Python", "Node.js", "PostgreSQL"],
+      githubUrl: "https://github.com/varunsai20-a11y/DataLens",
+      liveDemoUrl: "https://github.com/varunsai20-a11y/DataLens",
+      difficulty: "Five Stars"
     },
     {
       id: "heist-03",
@@ -228,12 +228,12 @@ export const portfolioConfig = {
           liveDemo: "https://stock-market-ai-nnijg8svkygdreuvvxusbg.streamlit.app/"
         },
         {
-          title: "DYNAMIC SOFT-THRESHOLDING",
-          tag: "RESEARCH / ML",
-          desc: "Adaptive LASSO feature selection benchmark over 50 training epochs on Ames Housing dataset with modular repo.",
-          tech: ["Python", "Scikit-Learn", "NumPy"],
-          github: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project",
-          liveDemo: "https://github.com/varunsai20-a11y/dynamic_soft_thresholding_project"
+          title: "DATALENS PLATFORM",
+          tag: "DATA RELIABILITY / AI PIPELINES",
+          desc: "Automated data reliability, distribution drift detection, dataset quality scoring, and AI-driven statistical interpretation platform.",
+          tech: ["TypeScript", "Python", "Node.js", "PostgreSQL"],
+          github: "https://github.com/varunsai20-a11y/DataLens",
+          liveDemo: "https://github.com/varunsai20-a11y/DataLens"
         },
         {
           title: "SARATHI PLATFORM (SIH 2025)",
