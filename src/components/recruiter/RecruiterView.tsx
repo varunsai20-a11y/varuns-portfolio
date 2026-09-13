@@ -156,17 +156,17 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
-            {/* Mode Handoff Button to GTA */}
+            {/* Single Mode Handoff Button to GTA */}
             <button
               onClick={onSwitchToGTA}
-              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-all shadow-sm ${
+              className={`flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg border transition-all shadow-sm cursor-pointer hover:scale-105 ${
                 isDark
-                  ? "bg-slate-900 border-amber-500/40 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400"
+                  ? "bg-slate-900 border-amber-500/50 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400"
                   : "bg-slate-900 border-slate-900 text-white hover:bg-slate-800"
               }`}
             >
               <Gamepad2 size={15} className="text-amber-400" />
-              <span>GTA Mode</span>
+              <span>Launch GTA Mode</span>
             </button>
           </nav>
         </div>

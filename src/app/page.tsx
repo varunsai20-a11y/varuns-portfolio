@@ -179,8 +179,8 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen w-full">
-      {/* ─── Persistent Floating Mode Switcher Button ─── */}
-      {!isRecruiterMode ? (
+      {/* ─── Persistent Floating Mode Switcher Button (Only shown in GTA mode to switch to Recruiter view) ─── */}
+      {!isRecruiterMode && (
         <button
           onClick={() => handleToggleMode(true)}
           aria-label="Switch to Recruiter View"
@@ -188,15 +188,6 @@ export default function Home() {
         >
           <FileText size={14} className="text-gta-yellow" />
           <span className="tracking-wider">📄 Recruiter / Clean View</span>
-        </button>
-      ) : (
-        <button
-          onClick={() => handleToggleMode(false)}
-          aria-label="Launch GTA Interactive Mode"
-          className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-900 backdrop-blur-md border border-amber-500/50 text-amber-300 font-sans text-xs sm:text-sm font-semibold shadow-2xl transition-all duration-300 hover:scale-105 hover:border-amber-400 active:scale-95 cursor-pointer"
-        >
-          <Gamepad2 size={16} className="text-amber-400" />
-          <span className="tracking-wider">🎮 Launch GTA Mode</span>
         </button>
       )}
 
