@@ -19,8 +19,10 @@ import {
   Download,
   Flame,
   ExternalLink,
+  ShieldAlert,
 } from "lucide-react";
 import LeetCodeModal from "@/components/modals/LeetCodeModal";
+import TechIcon from "@/components/ui/TechIcon";
 
 // Lazy-load the Three.js Signature 3D Centerpiece
 const R3FCenterpiece = dynamic(() => import("@/components/three/R3FCenterpiece"), {
@@ -34,20 +36,20 @@ interface SlideContentManagerProps {
 }
 
 const slideVariants = {
-  initial: { opacity: 0, x: 45, rotateY: -6, scale: 0.95 },
+  initial: { opacity: 0, x: 50, rotateY: -8, scale: 0.94 },
   animate: {
     opacity: 1,
     x: 0,
     rotateY: 0,
     scale: 1,
-    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
-    x: -45,
-    rotateY: 6,
-    scale: 0.95,
-    transition: { duration: 0.28, ease: "easeIn" },
+    x: -50,
+    rotateY: 8,
+    scale: 0.94,
+    transition: { duration: 0.3, ease: "easeIn" },
   },
 };
 
@@ -90,7 +92,7 @@ export default function SlideContentManager({
 
   return (
     <div
-      className="fixed left-4 sm:left-12 lg:left-20 top-32 bottom-20 z-10 w-[92vw] sm:w-[45vw] max-w-[650px] flex items-center justify-start overflow-hidden pointer-events-none select-none"
+      className="fixed left-3 sm:left-10 lg:left-16 top-28 bottom-16 z-10 w-[94vw] sm:w-[48vw] max-w-[680px] flex items-center justify-start overflow-hidden pointer-events-none select-none"
       style={{ perspective: "1200px" }}
     >
       <AnimatePresence mode="wait">
@@ -103,13 +105,13 @@ export default function SlideContentManager({
           style={{
             rotateX: tilt.rotateX,
             rotateY: tilt.rotateY,
-            background: "rgba(12, 16, 22, 0.8)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: "1px solid rgba(255, 255, 255, 0.12)",
+            background: "rgba(10, 14, 22, 0.88)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            border: "1px solid rgba(245, 197, 24, 0.35)",
             boxShadow:
-              "inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.8)",
-            borderRadius: "3px",
+              "inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(245, 197, 24, 0.1)",
+            borderRadius: "4px",
           }}
           onWheel={(e) => {
             const container = e.currentTarget;
@@ -121,33 +123,34 @@ export default function SlideContentManager({
               e.stopPropagation();
             }
           }}
-          className="w-full pointer-events-auto max-h-[82vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gta-yellow/30 transition-transform duration-300 ease-out relative rounded-[3px]"
+          className="w-full pointer-events-auto max-h-[82vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gta-yellow/40 transition-transform duration-300 ease-out relative rounded-[4px]"
         >
           {/* ─── SLIDE 1: HERO / GTA V INTERACTION MENU ─── */}
           {slide.id === "hero" && (
             <div className="flex flex-col items-start justify-center w-full">
-              {/* Solid Dark Header Bar */}
-              <div className="w-full bg-[#0D0E12] px-5 py-3.5 border-b border-white/12 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-2.5 h-2.5 bg-[#F5B800] rounded-[1px] animate-pulse" />
+              {/* Top Header Bar */}
+              <div className="w-full bg-[#090b10] px-6 py-4 border-b border-white/15 flex items-center justify-between shadow-md">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-[#F5B800] rounded-[1px] animate-pulse shadow-[0_0_8px_#F5B800]" />
                   <h2 className="font-gta text-2xl sm:text-3xl text-white tracking-widest leading-none uppercase">
                     {portfolioConfig.personal.name}
                   </h2>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-[#000000] bg-[#85BB65] px-2.5 py-0.5 rounded-[2px] font-bold tracking-wider">
+                  <span className="font-mono text-xs text-[#000000] bg-[#85BB65] px-2.5 py-1 rounded-[2px] font-bold tracking-wider shadow-sm">
                     {portfolioConfig.hud.cashAmount}
                   </span>
                 </div>
               </div>
 
               {/* Subtitle & R3F Centerpiece Banner */}
-              <div className="w-full px-5 py-3.5 bg-black/30 border-b border-white/5 flex items-center justify-between">
+              <div className="w-full px-6 py-4 bg-black/40 border-b border-white/10 flex items-center justify-between">
                 <div>
-                  <p className="font-hud text-[10px] text-gta-orange tracking-[0.3em] uppercase">
-                    MISSION PASSED +RESPECT
+                  <p className="font-hud text-[10px] text-gta-orange tracking-[0.3em] uppercase flex items-center gap-1.5 font-bold">
+                    <ShieldAlert size={12} className="text-gta-orange animate-pulse" />
+                    <span>MISSION PASSED +RESPECT</span>
                   </p>
-                  <p className="font-oswald text-sm sm:text-base text-gta-cyan tracking-wider font-semibold mt-0.5">
+                  <p className="font-oswald text-base sm:text-lg text-gta-cyan tracking-wider font-semibold mt-0.5">
                     {portfolioConfig.personal.title}
                   </p>
                 </div>
@@ -166,7 +169,7 @@ export default function SlideContentManager({
                     onClick={() => onNavigateSlide(menuTargetIndex[item] ?? 1)}
                     onMouseEnter={() => onMenuHoverChange?.(true)}
                     onMouseLeave={() => onMenuHoverChange?.(false)}
-                    className="group relative w-full text-left font-oswald text-base sm:text-lg tracking-[0.05em] font-bold px-5 py-3 transition-all duration-150 flex items-center justify-between cursor-pointer border-b border-white/[0.05] bg-[rgba(20,24,30,0.55)] text-white hover:bg-white hover:text-black border-l-0 hover:border-l-[4px] hover:border-l-[#F5B800] rounded-none"
+                    className="group relative w-full text-left font-oswald text-base sm:text-lg tracking-[0.08em] font-bold px-6 py-3.5 transition-all duration-150 flex items-center justify-between cursor-pointer border-b border-white/[0.06] bg-[rgba(15,19,26,0.7)] text-white hover:bg-white hover:text-black border-l-0 hover:border-l-[5px] hover:border-l-[#F5B800] rounded-none shadow-sm"
                   >
                     <span className="flex items-center gap-3 relative z-10 uppercase">
                       <ChevronRight
@@ -183,12 +186,12 @@ export default function SlideContentManager({
               </div>
 
               {/* Social Quick Action Buttons */}
-              <div className="p-4 bg-[#0D0E12]/80 border-t border-white/10 w-full flex flex-wrap items-center gap-3">
+              <div className="p-4 bg-[#090b10]/90 border-t border-white/15 w-full flex flex-wrap items-center gap-3">
                 <a
                   href={portfolioConfig.personal.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-black/60 hover:bg-[#F5B800] hover:text-black text-[#F5B800] border border-[#F5B800]/40 rounded-[2px] font-oswald text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-md font-bold"
+                  className="px-4 py-2 bg-black/70 hover:bg-[#F5B800] hover:text-black text-[#F5B800] border border-[#F5B800]/40 rounded-[2px] font-oswald text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-md font-bold"
                 >
                   <Github size={15} />
                   <span>GITHUB</span>
@@ -198,7 +201,7 @@ export default function SlideContentManager({
                   href={portfolioConfig.personal.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-black/60 hover:bg-gta-cyan hover:text-black text-gta-cyan border border-gta-cyan/40 rounded-[2px] font-oswald text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-md font-bold"
+                  className="px-4 py-2 bg-black/70 hover:bg-gta-cyan hover:text-black text-gta-cyan border border-gta-cyan/40 rounded-[2px] font-oswald text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-md font-bold"
                 >
                   <Linkedin size={15} />
                   <span>LINKEDIN</span>
@@ -209,28 +212,30 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 2: ABOUT ME ─── */}
           {slide.id === "about" && (
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <Sparkles className="text-gta-yellow" size={22} />
+            <div className="p-6 sm:p-7">
+              <div className="flex items-center gap-3 mb-5 border-b border-white/10 pb-4">
+                <Sparkles className="text-gta-yellow" size={24} />
                 <div>
-                  <p className="font-hud text-[10px] text-gta-orange tracking-widest">
+                  <p className="font-hud text-[10px] text-gta-orange tracking-widest font-bold">
                     {slide.tagline?.toUpperCase()}
                   </p>
-                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow">{slide.title}</h2>
+                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow tracking-wider">
+                    {slide.title}
+                  </h2>
                 </div>
               </div>
 
-              <p className="font-body text-gray-200 text-sm sm:text-base leading-relaxed mb-5">
+              <p className="font-body text-slate-200 text-sm sm:text-base leading-relaxed mb-6">
                 {slide.content?.bio}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
                 {slide.content?.stats?.map((stat) => (
                   <div
                     key={stat.label}
-                    className="bg-black/60 border border-white/15 p-3 rounded-xl flex flex-col justify-between shadow-inner"
+                    className="bg-black/70 border border-white/15 p-3.5 rounded-xl flex flex-col justify-between shadow-inner backdrop-blur-md"
                   >
-                    <span className="font-hud text-[9px] text-gta-gray tracking-widest">
+                    <span className="font-hud text-[9px] text-gta-gray tracking-widest font-bold">
                       {stat.label}
                     </span>
                     <span className="font-hud text-xs sm:text-sm text-gta-cyan font-bold mt-1">
@@ -242,44 +247,46 @@ export default function SlideContentManager({
 
               <button
                 onClick={() => onNavigateSlide(3)}
-                className="gta-btn px-5 py-2.5 text-xs font-hud tracking-wider flex items-center gap-2 cursor-pointer shadow-xl"
+                className="gta-btn px-6 py-3 text-xs font-hud tracking-wider flex items-center gap-2 cursor-pointer shadow-xl rounded-[2px]"
               >
                 <span>{slide.content?.actionButton}</span>
-                <ChevronRight size={15} />
+                <ChevronRight size={16} />
               </button>
             </div>
           )}
 
           {/* ─── SLIDE 3: SKILLS ─── */}
           {slide.id === "skills" && (
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-5">
-                <Cpu className="text-gta-cyan" size={22} />
+            <div className="p-6 sm:p-7">
+              <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
+                <Cpu className="text-gta-cyan" size={24} />
                 <div>
-                  <p className="font-hud text-[10px] text-gta-orange tracking-widest">
+                  <p className="font-hud text-[10px] text-gta-orange tracking-widest font-bold">
                     {slide.tagline?.toUpperCase()}
                   </p>
-                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow">{slide.title}</h2>
+                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow tracking-wider">
+                    {slide.title}
+                  </h2>
                 </div>
               </div>
 
-              <div className="space-y-3.5">
+              <div className="space-y-4">
                 {slide.skillBars?.map((skill, idx) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="font-hud text-xs text-white tracking-wider">
+                  <div key={skill.name} className="space-y-1">
+                    <div className="flex justify-between items-center">
+                      <span className="font-hud text-xs sm:text-sm text-white tracking-wider font-bold">
                         {skill.name}
                       </span>
                       <span className="font-hud text-xs text-gta-green font-bold">
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="w-full h-2.5 bg-black/80 rounded-full overflow-hidden border border-white/10 p-0.5">
+                    <div className="w-full h-3 bg-black/80 rounded-full overflow-hidden border border-white/15 p-0.5 shadow-inner">
                       <motion.div
                         initial={{ width: "0%" }}
                         animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 0.8, delay: 0.15 + idx * 0.08 }}
-                        className="h-full bg-gradient-to-r from-gta-cyan via-gta-green to-gta-yellow rounded-full"
+                        transition={{ duration: 0.85, delay: 0.1 + idx * 0.08 }}
+                        className="h-full bg-gradient-to-r from-gta-cyan via-gta-green to-gta-yellow rounded-full shadow-[0_0_10px_rgba(0,212,255,0.5)]"
                       />
                     </div>
                   </div>
@@ -288,65 +295,80 @@ export default function SlideContentManager({
             </div>
           )}
 
-          {/* ─── SLIDE 4: PROJECTS ─── */}
+          {/* ─── SLIDE 4: PROJECTS (HEISTS) ─── */}
           {slide.id === "projects" && (
-            <div className="p-6 space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+            <div className="p-6 sm:p-7 space-y-5">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div>
-                  <p className="font-hud text-[10px] text-gta-orange tracking-widest">
+                  <p className="font-hud text-[10px] text-gta-orange tracking-widest font-bold">
                     {slide.tagline?.toUpperCase()}
                   </p>
-                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow">{slide.title}</h2>
+                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow tracking-wider">
+                    {slide.title}
+                  </h2>
                 </div>
-                <span className="font-hud text-[10px] text-gta-green border border-gta-green/30 px-3 py-1 rounded-full">
+                <span className="font-hud text-[10px] text-gta-green border border-gta-green/40 bg-gta-green/10 px-3 py-1 rounded-full font-bold">
                   {slide.projectsList?.length || 4} HEISTS READY
                 </span>
               </div>
 
-              <div className="space-y-3">
-                {slide.projectsList?.map((proj) => (
+              <div className="space-y-4">
+                {slide.projectsList?.map((proj, pIdx) => (
                   <div
                     key={proj.title}
-                    className="p-3.5 bg-black/60 border border-white/15 hover:border-gta-yellow rounded-xl flex flex-col justify-between transition-all"
+                    className="p-4 sm:p-5 bg-black/75 border border-white/15 hover:border-gta-yellow rounded-xl flex flex-col justify-between transition-all duration-300 shadow-md backdrop-blur-md group"
                   >
                     <div>
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-gta text-base text-white">{proj.title}</h3>
-                        <span className="font-hud text-[8px] text-gta-pink font-bold">
+                      <div className="flex justify-between items-start gap-2 mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-bold text-gta-yellow">
+                            0{pIdx + 1}
+                          </span>
+                          <h3 className="font-gta text-lg text-white group-hover:text-gta-yellow transition-colors">
+                            {proj.title}
+                          </h3>
+                        </div>
+                        <span className="font-hud text-[9px] text-gta-pink font-bold border border-gta-pink/40 bg-gta-pink/10 px-2 py-0.5 rounded shrink-0">
                           {proj.tag}
                         </span>
                       </div>
-                      <p className="font-body text-xs text-gray-300 leading-relaxed my-1.5">
+
+                      <p className="font-body text-xs sm:text-sm text-slate-300 leading-relaxed my-2">
                         {proj.desc}
                       </p>
 
-                      <div className="flex flex-wrap gap-1 mb-3">
+                      <div className="flex flex-wrap gap-1.5 my-3">
                         {proj.tech.map((t) => (
                           <span
                             key={t}
-                            className="bg-white/10 text-gta-cyan font-hud text-[8px] px-1.5 py-0.5 rounded"
+                            className="inline-flex items-center gap-1 bg-white/10 border border-white/15 text-gta-cyan font-hud text-[9px] px-2 py-0.5 rounded font-bold"
                           >
-                            {t}
+                            <TechIcon name={t} size={12} />
+                            <span>{t}</span>
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 mt-2">
+                    <div className="flex flex-wrap items-center gap-2 mt-2 pt-2 border-t border-white/10">
                       <a
-                        href="#safehouse"
-                        className="flex-1 py-1.5 bg-gta-yellow/10 hover:bg-gta-yellow hover:text-black border border-gta-yellow/40 text-gta-yellow text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold"
+                        href={proj.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 py-2 bg-gta-yellow/15 hover:bg-gta-yellow hover:text-black border border-gta-yellow/50 text-gta-yellow text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold shadow-md"
                       >
-                        <Github size={13} />
+                        <Github size={14} />
                         <span>REQUEST CODE</span>
                       </a>
 
-                      {(proj as any).liveDemo && (
+                      {proj.liveDemo && (
                         <a
-                          href="#safehouse"
-                          className="flex-1 py-1.5 bg-gta-cyan/15 hover:bg-gta-cyan hover:text-black border border-gta-cyan/40 text-gta-cyan text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold shadow-md hover:shadow-gta-cyan/20"
+                          href={proj.liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-2 bg-gta-cyan/15 hover:bg-gta-cyan hover:text-black border border-gta-cyan/50 text-gta-cyan text-center font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold shadow-md"
                         >
-                          <ExternalLink size={13} />
+                          <ExternalLink size={14} />
                           <span>REQUEST LIVE DEMO</span>
                         </a>
                       )}
@@ -359,27 +381,29 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 5: EXPERIENCE ─── */}
           {slide.id === "experience" && (
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-5">
-                <Briefcase className="text-gta-yellow" size={22} />
+            <div className="p-6 sm:p-7">
+              <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
+                <Briefcase className="text-gta-yellow" size={24} />
                 <div>
-                  <p className="font-hud text-[10px] text-gta-orange tracking-widest">
+                  <p className="font-hud text-[10px] text-gta-orange tracking-widest font-bold">
                     {slide.tagline?.toUpperCase()}
                   </p>
-                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow">{slide.title}</h2>
+                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow tracking-wider">
+                    {slide.title}
+                  </h2>
                 </div>
               </div>
 
-              <div className="space-y-5 relative border-l-2 border-gta-yellow/30 pl-5 ml-2">
+              <div className="space-y-6 relative border-l-2 border-gta-yellow/40 pl-6 ml-2">
                 {slide.timeline?.map((item) => (
-                  <div key={item.role} className="relative">
-                    <div className="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-gta-yellow border-2 border-black" />
-                    <span className="font-hud text-[10px] text-gta-cyan tracking-wider font-bold">
+                  <div key={item.role} className="relative space-y-1">
+                    <div className="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-gta-yellow border-2 border-black shadow-[0_0_10px_#F5B800]" />
+                    <span className="font-hud text-xs text-gta-cyan tracking-wider font-bold">
                       {item.period}
                     </span>
-                    <h3 className="font-gta text-lg text-white mt-0.5">{item.role}</h3>
-                    <p className="font-hud text-xs text-gta-gray mb-1.5">{item.org}</p>
-                    <p className="font-body text-xs text-gray-300 leading-relaxed">
+                    <h3 className="font-gta text-xl text-white mt-0.5">{item.role}</h3>
+                    <p className="font-hud text-xs text-gta-gray font-bold">{item.org}</p>
+                    <p className="font-body text-xs sm:text-sm text-slate-300 leading-relaxed pt-1">
                       {item.detail}
                     </p>
                   </div>
@@ -390,19 +414,21 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 6: ACHIEVEMENTS ─── */}
           {slide.id === "achievements" && (
-            <div className="p-6">
+            <div className="p-6 sm:p-7 space-y-5">
               <LeetCodeModal isOpen={isLeetCodeOpen} onClose={() => setIsLeetCodeOpen(false)} />
-              <div className="flex items-center gap-3 mb-5">
-                <Trophy className="text-gta-yellow" size={22} />
+              <div className="flex items-center gap-3 border-b border-white/10 pb-4">
+                <Trophy className="text-gta-yellow" size={24} />
                 <div>
-                  <p className="font-hud text-[10px] text-gta-orange tracking-widest">
+                  <p className="font-hud text-[10px] text-gta-orange tracking-widest font-bold">
                     {slide.tagline?.toUpperCase()}
                   </p>
-                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow">{slide.title}</h2>
+                  <h2 className="font-gta text-2xl sm:text-4xl text-gta-yellow tracking-wider">
+                    {slide.title}
+                  </h2>
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-3.5">
                 {slide.trophies?.map((trophy: any) => {
                   const isLeetCode = trophy.category === "LeetCode" || trophy.isLeetCode;
                   return (
@@ -411,29 +437,33 @@ export default function SlideContentManager({
                       onClick={() => {
                         if (isLeetCode) setIsLeetCodeOpen(true);
                       }}
-                      className={`bg-black/60 border p-3.5 rounded-xl transition-all ${
+                      className={`bg-black/75 border p-4 rounded-xl transition-all duration-300 backdrop-blur-md ${
                         isLeetCode
-                          ? "border-gta-orange/50 hover:border-gta-orange bg-black/80 cursor-pointer shadow-md hover:shadow-gta-orange/20"
+                          ? "border-gta-orange/60 hover:border-gta-orange bg-black/90 cursor-pointer shadow-lg hover:shadow-gta-orange/20"
                           : "border-white/15 hover:border-gta-yellow"
                       }`}
                     >
-                      <div className="flex justify-between items-start mb-1">
+                      <div className="flex justify-between items-start mb-1.5">
                         <span
-                          className={`font-hud text-[8px] px-2 py-0.5 rounded border font-bold ${
+                          className={`font-hud text-[9px] px-2.5 py-0.5 rounded border font-bold ${
                             isLeetCode
-                              ? "bg-gta-orange/20 text-gta-orange border-gta-orange/40"
-                              : "bg-gta-yellow/20 text-gta-yellow border-gta-yellow/30"
+                              ? "bg-gta-orange/20 text-gta-orange border-gta-orange/50"
+                              : "bg-gta-yellow/20 text-gta-yellow border-gta-yellow/40"
                           }`}
                         >
                           🏆 {trophy.badge}
                         </span>
-                        <span className="font-hud text-[9px] text-gta-gray">{trophy.date}</span>
+                        <span className="font-hud text-[10px] text-gta-gray font-bold">
+                          {trophy.date}
+                        </span>
                       </div>
-                      <h4 className="font-hud text-xs sm:text-sm text-white font-bold mb-0.5">
+                      <h4 className="font-hud text-sm text-white font-bold mb-0.5">
                         {trophy.title}
                       </h4>
-                      <p className="font-hud text-[10px] text-gta-cyan mb-1">{trophy.org || trophy.organization}</p>
-                      <p className="font-body text-xs text-gray-300 leading-relaxed mb-2">
+                      <p className="font-hud text-xs text-gta-cyan mb-1 font-semibold">
+                        {trophy.org || trophy.organization}
+                      </p>
+                      <p className="font-body text-xs sm:text-sm text-slate-300 leading-relaxed mb-2">
                         {trophy.details || trophy.desc}
                       </p>
 
@@ -443,11 +473,11 @@ export default function SlideContentManager({
                             e.stopPropagation();
                             setIsLeetCodeOpen(true);
                           }}
-                          className="w-full mt-2 py-1.5 px-3 bg-gta-orange/20 hover:bg-gta-orange hover:text-black border border-gta-orange/40 text-gta-orange font-hud text-[10px] tracking-wider rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer font-bold"
+                          className="w-full mt-2 py-2 px-3 bg-gta-orange/20 hover:bg-gta-orange hover:text-black border border-gta-orange/50 text-gta-orange font-hud text-[11px] tracking-wider rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer font-bold shadow-md"
                         >
-                          <Flame size={13} className="animate-pulse" />
-                          <span>INSPECT LIVE STATS</span>
-                          <ExternalLink size={13} />
+                          <Flame size={14} className="animate-pulse" />
+                          <span>INSPECT LIVE LEETCODE STATS</span>
+                          <ExternalLink size={14} />
                         </button>
                       )}
                     </div>
@@ -459,52 +489,51 @@ export default function SlideContentManager({
 
           {/* ─── SLIDE 7: CONTACT ─── */}
           {slide.id === "contact" && (
-            <div className="p-6 text-center">
-              <p className="font-hud text-xs text-gta-orange tracking-[0.3em] mb-1">
+            <div className="p-6 sm:p-7 text-center">
+              <p className="font-hud text-xs text-gta-orange tracking-[0.3em] font-bold mb-1">
                 SECURE LINE
               </p>
-              <h2 className="font-gta text-3xl sm:text-5xl text-gta-yellow gta-glow mb-3">
-                SAFEHOUSE
+              <h2 className="font-gta text-3xl sm:text-5xl text-gta-yellow gta-glow mb-4">
+                SAFEHOUSE TRANSMISSION
               </h2>
 
-              <p className="font-body text-gray-300 text-xs sm:text-sm mb-5">
-                Open a direct transmission for missions, research lead tracks, or full-stack AI/Data engineering projects.
+              <p className="font-body text-slate-300 text-xs sm:text-sm mb-6 max-w-lg mx-auto">
+                Open a direct transmission for engineering roles, research tracks, or full-stack software development projects.
               </p>
 
-              <div className="space-y-2.5 mb-5 text-left">
+              <div className="space-y-3 mb-6 text-left">
                 <button
-                  onClick={() => handleCopyEmail(slide.contactInfo?.email || "varunsai.b77@gmail.com")}
-                  className="w-full p-3 bg-black/60 border border-white/15 hover:border-gta-cyan rounded-xl flex items-center justify-between gap-3 transition-all cursor-pointer group text-left"
+                  onClick={() => handleCopyEmail(slide.contactInfo?.email || "varunsai.1028@gmail.com")}
+                  className="w-full p-3.5 bg-black/75 border border-white/15 hover:border-gta-cyan rounded-xl flex items-center justify-between gap-3 transition-all cursor-pointer group text-left shadow-md backdrop-blur-md"
                 >
                   <div className="flex items-center gap-3">
-                    <Mail className="text-gta-cyan group-hover:scale-110 transition-transform" size={16} />
+                    <Mail className="text-gta-cyan group-hover:scale-110 transition-transform" size={18} />
                     <div>
-                      <p className="font-hud text-[8px] text-gta-gray">EMAIL TRANSMISSION (CLICK TO COPY)</p>
-                      <p className="font-hud text-xs sm:text-sm text-white">
+                      <p className="font-hud text-[8px] text-gta-gray font-bold">EMAIL TRANSMISSION (CLICK TO COPY)</p>
+                      <p className="font-hud text-xs sm:text-sm text-white font-bold">
                         {slide.contactInfo?.email}
                       </p>
                     </div>
                   </div>
                   {copiedEmail ? (
-                    <span className="font-hud text-[10px] text-gta-green font-bold bg-gta-green/20 border border-gta-green/40 px-2 py-0.5 rounded animate-bounce">
+                    <span className="font-hud text-[10px] text-gta-green font-bold bg-gta-green/20 border border-gta-green/40 px-2.5 py-1 rounded animate-bounce">
                       COPIED!
                     </span>
                   ) : (
-                    <span className="font-hud text-[9px] text-gta-gray group-hover:text-gta-cyan transition-colors">
+                    <span className="font-hud text-[9px] text-gta-gray group-hover:text-gta-cyan transition-colors font-bold">
                       [COPY]
                     </span>
                   )}
                 </button>
 
-
                 <a
                   href={`tel:${slide.contactInfo?.phone}`}
-                  className="p-3 bg-black/60 border border-white/15 hover:border-gta-green rounded-xl flex items-center gap-3 transition-all cursor-pointer block"
+                  className="p-3.5 bg-black/75 border border-white/15 hover:border-gta-green rounded-xl flex items-center gap-3 transition-all cursor-pointer block shadow-md backdrop-blur-md"
                 >
-                  <Phone className="text-gta-green" size={16} />
+                  <Phone className="text-gta-green" size={18} />
                   <div>
-                    <p className="font-hud text-[8px] text-gta-gray">PHONE / WHATSAPP</p>
-                    <p className="font-hud text-xs sm:text-sm text-white">
+                    <p className="font-hud text-[8px] text-gta-gray font-bold">DIRECT PHONE</p>
+                    <p className="font-hud text-xs sm:text-sm text-white font-bold">
                       {slide.contactInfo?.phone}
                     </p>
                   </div>
@@ -512,26 +541,27 @@ export default function SlideContentManager({
 
                 <a
                   href={slide.contactInfo?.resumeUrl || "/api/assets/B_Varun_Sai_Resume.pdf"}
-                  download="B_Varun_Sai_Resume.pdf"
-                  className="p-3 bg-black/60 border border-gta-yellow/40 hover:border-gta-yellow hover:bg-gta-yellow/15 rounded-xl flex items-center gap-3 transition-all cursor-pointer block group shadow-lg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3.5 bg-black/75 border border-gta-yellow/40 hover:border-gta-yellow hover:bg-gta-yellow/15 rounded-xl flex items-center gap-3 transition-all cursor-pointer block group shadow-lg backdrop-blur-md"
                 >
-                  <FileText className="text-gta-yellow group-hover:scale-110 transition-transform shrink-0" size={18} />
+                  <FileText className="text-gta-yellow group-hover:scale-110 transition-transform shrink-0" size={20} />
                   <div className="flex-1 flex items-center justify-between min-w-0">
                     <div>
-                      <p className="font-hud text-[8px] text-gta-orange tracking-widest">DOSSIER / RESUME</p>
+                      <p className="font-hud text-[8px] text-gta-orange tracking-widest font-bold">DOSSIER / RESUME</p>
                       <p className="font-hud text-xs sm:text-sm text-gta-yellow font-bold truncate">
-                        DOWNLOAD INTEL RESUME (PDF)
+                        DOWNLOAD RESUME (PDF)
                       </p>
                     </div>
-                    <Download size={15} className="text-gta-yellow group-hover:translate-y-0.5 transition-transform shrink-0 ml-2" />
+                    <Download size={16} className="text-gta-yellow group-hover:translate-y-0.5 transition-transform shrink-0 ml-2" />
                   </div>
                 </a>
 
-                <div className="p-3 bg-black/60 border border-white/15 rounded-xl flex items-center gap-3">
-                  <MapPin className="text-gta-red shrink-0" size={16} />
+                <div className="p-3.5 bg-black/75 border border-white/15 rounded-xl flex items-center gap-3 shadow-md backdrop-blur-md">
+                  <MapPin className="text-gta-red shrink-0" size={18} />
                   <div>
-                    <p className="font-hud text-[8px] text-gta-gray">BASE LOCATION</p>
-                    <p className="font-hud text-xs sm:text-sm text-white">
+                    <p className="font-hud text-[8px] text-gta-gray font-bold">BASE LOCATION</p>
+                    <p className="font-hud text-xs sm:text-sm text-white font-bold">
                       {slide.contactInfo?.location}
                     </p>
                   </div>
@@ -539,11 +569,12 @@ export default function SlideContentManager({
               </div>
 
               {/* Direct Links */}
-              <div className="flex flex-wrap justify-center gap-2.5">
+              <div className="flex flex-wrap justify-center gap-3">
                 <a
                   href={slide.contactInfo?.resumeUrl || "/api/assets/B_Varun_Sai_Resume.pdf"}
-                  download="B_Varun_Sai_Resume.pdf"
-                  className="px-4 py-2 bg-gta-yellow/20 hover:bg-gta-yellow hover:text-black text-gta-yellow border border-gta-yellow/50 rounded-xl font-hud text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-lg font-bold"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 bg-gta-yellow/20 hover:bg-gta-yellow hover:text-black text-gta-yellow border border-gta-yellow/50 rounded-xl font-hud text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-lg font-bold"
                 >
                   <Download size={15} />
                   <span>DOWNLOAD RESUME</span>
@@ -553,7 +584,7 @@ export default function SlideContentManager({
                   href={slide.contactInfo?.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="gta-btn px-4 py-2 text-xs font-hud tracking-widest flex items-center gap-2 cursor-pointer shadow-lg"
+                  className="gta-btn px-5 py-2.5 text-xs font-hud tracking-widest flex items-center gap-2 cursor-pointer shadow-lg rounded-[2px]"
                 >
                   <Github size={15} />
                   <span>GITHUB REPO</span>
@@ -563,7 +594,7 @@ export default function SlideContentManager({
                   href={slide.contactInfo?.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-black/60 hover:bg-gta-cyan hover:text-black text-gta-cyan border border-gta-cyan/40 rounded-xl font-hud text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-lg"
+                  className="px-5 py-2.5 bg-black/70 hover:bg-gta-cyan hover:text-black text-gta-cyan border border-gta-cyan/40 rounded-xl font-hud text-xs tracking-widest flex items-center gap-2 transition-all cursor-pointer shadow-lg font-bold"
                 >
                   <Linkedin size={15} />
                   <span>LINKEDIN PROFILE</span>
