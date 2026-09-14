@@ -4,7 +4,7 @@ export const portfolioConfig = {
     logoTitle: "VARUN BUILDS",
     subtitle: "Portfolio",
     title: "AI & Data Engineering Developer",
-    bio: "Motivated AI & Data Engineering student developing scalable applications, predictive models, and analytical solutions.",
+    bio: "Builds practical, production-ready data systems that bridge deep learning models with full-stack delivery—from sub-second NLP and time-series inference engines to fault-tolerant PWAs with offline caching and dynamic GIS routing.",
     status: "AVAILABLE FOR MISSIONS",
     quote: "Code is my weapon. Creativity is my world.",
     location: "Bengaluru, India",
@@ -38,47 +38,36 @@ export const portfolioConfig = {
   missions: [
     {
       id: "heist-01",
-      title: "AI STOCK MARKET PREDICTOR",
-      category: "FINTECH / NLP",
-      tagline: "Real-Time Sentiment Analysis",
-      description: "AI conversational chatbot delivering real-time sentiment analysis and buy/sell prediction for 100+ stock symbols.",
-      techStack: ["Python", "NLP", "Streamlit", "XGBoost"],
+      title: "AI PREDICTIVE STOCK ANALYTICS & SENTIMENT ENGINE",
+      category: "FINTECH / NLP & TIME-SERIES",
+      tagline: "Sentiment Intelligence & Multi-Task Inference",
+      description: "Combined NLP-based sentiment extraction with multi-task LSTM and XGBoost models to generate predictive buy/sell signals across 100+ equity tickers, lifting signal accuracy by 18% with sub-second real-time inference.",
+      techStack: ["Python", "PyTorch", "LSTM", "XGBoost", "NLP", "Scikit-Learn"],
       githubUrl: "https://github.com/varunsai20-a11y/stock-market-ai",
       liveDemoUrl: "https://stock-market-ai-nnijg8svkygdreuvvxusbg.streamlit.app/",
       difficulty: "Five Stars"
     },
     {
       id: "heist-02",
-      title: "DATALENS PLATFORM",
-      category: "DATA RELIABILITY / AI PIPELINES",
-      tagline: "Automated Data Quality & Drift Engine",
-      description: "Automated data reliability, distribution drift detection, dataset quality scoring, and AI-driven statistical interpretation platform.",
-      techStack: ["TypeScript", "Python", "Node.js", "PostgreSQL"],
+      title: "DATALENS – AUTOMATED DATA PROFILING PLATFORM",
+      category: "DATA PIPELINES / ANALYTICS",
+      tagline: "Automated Profiling & Interactive Analytics",
+      description: "Constructed an end-to-end data exploration dashboard facilitating automated schema inference, missing value detection, and statistical distribution profiling across diverse datasets, enabling low-latency data rendering.",
+      techStack: ["JavaScript", "React.js", "Node.js", "Pandas", "NumPy", "REST APIs"],
       githubUrl: "https://github.com/varunsai20-a11y/DataLens",
       liveDemoUrl: "https://github.com/varunsai20-a11y/DataLens",
       difficulty: "Five Stars"
     },
     {
       id: "heist-03",
-      title: "SARATHI PLATFORM (SIH 2025)",
-      category: "PWA / SAFETY TECH",
-      tagline: "Smart Tourism & SOS Navigation",
-      description: "Smart tourism PWA with offline interactive maps, emergency SOS, and multilingual navigation for travelers.",
-      techStack: ["JavaScript", "Leaflet Maps", "Service Workers"],
+      title: "SARATHI – SMART TOURISM & NAVIGATION (SIH 2025)",
+      category: "PWA / GIS & NAVIGATION",
+      tagline: "Resilient Offline Navigation System",
+      description: "Led architecture of a fault-tolerant PWA for tourism safety, using offline-first Service Worker caching, Leaflet GIS mapping, multi-threaded SOS dispatch, and Dijkstra-based path optimization for 99.9% uptime.",
+      techStack: ["JavaScript", "PWA", "Service Workers", "Leaflet GIS", "HTML5", "CSS3"],
       githubUrl: "https://github.com/varunsai20-a11y/sih-2025",
       liveDemoUrl: "https://sih-2025-gamma.vercel.app/",
       difficulty: "Five Stars"
-    },
-    {
-      id: "heist-04",
-      title: "PROPERTYHUB PLATFORM",
-      category: "REAL ESTATE / FULL-STACK",
-      tagline: "Property Marketplace & Interactive Search",
-      description: "Full-stack real estate marketplace platform featuring property listings, search filters, interactive mapping, and user account management.",
-      techStack: ["React.js", "Node.js", "Express", "MongoDB"],
-      githubUrl: "https://github.com/varunsai20-a11y/propertyhub",
-      liveDemoUrl: "https://propertyhub-coral.vercel.app/",
-      difficulty: "Four Stars"
     }
   ],
   achievements: [
@@ -86,20 +75,20 @@ export const portfolioConfig = {
       id: "trophy-01",
       badge: "RESEARCH LEAD",
       title: "Research Lead — DATA.AI Club",
-      organization: "Jain University (FET)",
-      date: "Feb 2026",
+      organization: "Jain University",
+      date: "Ongoing",
       tagline: "Leadership & Advanced R&D",
-      details: "Leading research wing, ML experimentation, and problem frameworks for datathons.",
+      details: "Organized and spearheaded 2+ department-wide technical coding events and workshops, driving engagement for 150+ participants while directing competitive problem statement design and research tracks.",
       category: "Leadership"
     },
     {
       id: "trophy-02",
       badge: "HACKATHON",
       title: "Smart India Hackathon (SIH 2025)",
-      organization: "MoE Innovation Cell",
-      date: "Sept 2025",
-      tagline: "24-Hour National Hackathon",
-      details: "24-hr Internal Smart India Hackathon participation developing traveler safety systems.",
+      organization: "Jain University",
+      date: "2025",
+      tagline: "24-Hour Internal Hackathon",
+      details: "Participated in the 24-hour Internal SIH 2025 Hackathon at Jain University, developing resilient tourism & safety infrastructure.",
       category: "Hackathon"
     },
     {
@@ -109,7 +98,7 @@ export const portfolioConfig = {
       organization: "IBM & Shooting Stars Foundation",
       date: "2025",
       tagline: "Global Datathon Event",
-      details: "Global Datathon Event participant at Kshitij Techno-Management fest.",
+      details: "Recognized for active participation in the global datathon by IBM and Shooting Stars Foundation.",
       category: "Datathon"
     },
     {
@@ -117,29 +106,39 @@ export const portfolioConfig = {
       badge: "ACADEMY",
       title: "Student Development Program on Java",
       organization: "E & ICT Academy, IIT Kanpur (MeitY)",
-      date: "Jan 2024",
-      tagline: "Advanced Java & Core Systems",
-      details: "Completed month-long development program on Java architecture.",
+      date: "Completed",
+      tagline: "Advanced Java Systems",
+      details: "Completed Student Development Program on Java via E & ICT Academy, IIT Kanpur.",
       category: "Academy"
     },
     {
       id: "trophy-05",
       badge: "CLOUD MENTEE",
       title: "Cloud Computing Mentorship",
-      organization: "Launched Global (ID: LEDCC8136)",
+      organization: "Launched Global",
       date: "Verified",
       tagline: "Cloud Architecture & Services",
-      details: "Hands-on mentorship covering cloud deployment & architecture.",
+      details: "Completed certified Mentorship Program in Cloud Computing.",
       category: "Mentorship"
     },
     {
       id: "trophy-06",
+      badge: "COURSERA CERTIFIED",
+      title: "Cloud Data Analytics, Data Warehousing, Cisco Networking & NLP",
+      organization: "Coursera",
+      date: "Certified",
+      tagline: "Google Cloud, Networking & NLP",
+      details: "Completed certifications in Google Cloud Data Analytics, Data Warehousing, Cisco Networking, and NLP.",
+      category: "Certifications"
+    },
+    {
+      id: "trophy-07",
       badge: "LEETCODE 200+",
       title: "200+ LeetCode Problems Solved",
-      organization: "LeetCode (@varun_s04)",
-      date: "Live Updates",
-      tagline: "Data Structures & Algorithms",
-      details: "Solved 200+ algorithmic challenges across Easy, Medium, and Hard topics with high acceptance rate.",
+      organization: "LeetCode",
+      date: "Verified",
+      tagline: "Java & Python Algorithms",
+      details: "Solved 200+ leetcode problems in Java and Python covering data structures and core algorithms.",
       category: "LeetCode",
       isLeetCode: true,
       leetcodeUsername: "varun_s04"
@@ -148,23 +147,24 @@ export const portfolioConfig = {
   experienceTimeline: [
     {
       period: "March 2025 – May 2025",
-      role: "ML & Computer Vision Intern",
-      organization: "College Internship Project",
-      checkpoint: "Checkpoint Alpha",
-      details: "Trained CNN image classifier on 5,000+ labeled dataset achieving 92% classification accuracy using OpenCV."
+      role: "ML Intern — Image Classification Project",
+      organization: "Jain University, Bengaluru",
+      checkpoint: "Machine Learning Intern",
+      details: "Architected and trained an end-to-end CNN pipeline on 5,000+ multi-class image samples, achieving 92% classification accuracy and reducing validation loss by 15%. Engineered high-throughput image preprocessing and automated data augmentation pipelines using OpenCV and NumPy."
     },
     {
-      period: "2023 – 2027",
-      role: "Undergraduate Scholar",
-      organization: "Jain University, Bengaluru",
+      period: "2023 – 2027 (Expected)",
+      role: "B.Tech in Computer Science and Engineering",
+      organization: "Jain University, Bengaluru, India",
       checkpoint: "Academic Base",
-      details: "Bachelor of Technology in CSE with AI & Data Engineering specialization (CGPA: 8.41/10.0)."
+      details: "Bachelor of Technology in Computer Science and Engineering (CGPA: 8.41 / 10.0 up to Semester VI)."
     }
   ],
   certifications: [
+    { title: "Google Cloud Data Analytics", issuer: "Coursera" },
     { title: "Fundamentals of Data Warehousing", issuer: "Coursera" },
     { title: "Basics of Cisco Networking", issuer: "Coursera" },
-    { title: "Introduction to Data Analytics in Google Cloud", issuer: "Coursera" }
+    { title: "Natural Language Processing (NLP)", issuer: "Coursera" }
   ],
   slides: [
     {
@@ -185,11 +185,11 @@ export const portfolioConfig = {
       objective: "LEARN WHO YOU ARE DEALING WITH",
       bgImage: "/api/assets/slide-about.jpg",
       content: {
-        bio: "Motivated AI and Data Engineering student specializing in machine learning pipelines, high-dimensional regression, and scalable web solutions.",
+        bio: "Builds practical, production-ready data systems that bridge deep learning models with full-stack delivery—from sub-second NLP and time-series inference engines to fault-tolerant PWAs with offline caching and dynamic GIS routing.",
         stats: [
           { label: "STATUS", value: "Available for Missions" },
           { label: "LOCATION", value: "Bengaluru, India" },
-          { label: "DEGREE", value: "B.Tech CSE (AI & Data Eng)" },
+          { label: "DEGREE", value: "B.Tech CSE (Grad: 2027)" },
           { label: "CGPA", value: "8.41 / 10.0 (Jain University)" }
         ],
         actionButton: "VIEW JOURNEY"
@@ -203,12 +203,12 @@ export const portfolioConfig = {
       objective: "REVIEW UNLOCKED ABILITIES & WEAPONS",
       bgImage: "/api/assets/slide-skills.jpg",
       skillBars: [
-        { name: "PYTHON / MACHINE LEARNING", level: 95 },
-        { name: "JAVA / CORE SYSTEMS", level: 90 },
-        { name: "SCALA & SQL", level: 85 },
-        { name: "REACT.JS / NEXT.JS / NODE", level: 88 },
-        { name: "FLASK / REST APIS", level: 85 },
-        { name: "OPENCV / SCIKIT-LEARN / PANDAS", level: 92 }
+        { name: "PYTHON / PYTORCH / TENSORFLOW", level: 95 },
+        { name: "JAVA / CORE SYSTEMS", level: 92 },
+        { name: "SQL & DATA PIPELINES", level: 88 },
+        { name: "REACT.JS / NODE.JS / FLASK", level: 90 },
+        { name: "OPENCV / SCIKIT-LEARN / NUMPY", level: 93 },
+        { name: "REST APIS / LINUX / GIT", level: 90 }
       ]
     },
     {
@@ -220,36 +220,28 @@ export const portfolioConfig = {
       bgImage: "/api/assets/slide-projects.jpg",
       projectsList: [
         {
-          title: "AI STOCK MARKET PREDICTOR",
-          tag: "FINTECH / NLP",
-          desc: "AI conversational chatbot delivering real-time sentiment analysis and buy/sell prediction for 100+ stock symbols.",
-          tech: ["Python", "NLP", "Streamlit", "XGBoost"],
+          title: "AI PREDICTIVE STOCK ANALYTICS & SENTIMENT ENGINE",
+          tag: "FINTECH / NLP & TIME-SERIES",
+          desc: "Combined NLP-based sentiment extraction with multi-task LSTM and XGBoost models to generate predictive buy/sell signals across 100+ equity tickers, lifting signal accuracy by 18% with sub-second real-time inference.",
+          tech: ["Python", "PyTorch", "LSTM", "XGBoost", "NLP", "Scikit-Learn"],
           github: "https://github.com/varunsai20-a11y/stock-market-ai",
           liveDemo: "https://stock-market-ai-nnijg8svkygdreuvvxusbg.streamlit.app/"
         },
         {
-          title: "DATALENS PLATFORM",
-          tag: "DATA RELIABILITY / AI PIPELINES",
-          desc: "Automated data reliability, distribution drift detection, dataset quality scoring, and AI-driven statistical interpretation platform.",
-          tech: ["TypeScript", "Python", "Node.js", "PostgreSQL"],
+          title: "DATALENS – AUTOMATED DATA PROFILING PLATFORM",
+          tag: "DATA PIPELINES / ANALYTICS",
+          desc: "Constructed an end-to-end data exploration dashboard facilitating automated schema inference, missing value detection, and statistical distribution profiling across diverse datasets, enabling low-latency data rendering.",
+          tech: ["JavaScript", "React.js", "Node.js", "Pandas", "NumPy", "REST APIs"],
           github: "https://github.com/varunsai20-a11y/DataLens",
           liveDemo: "https://github.com/varunsai20-a11y/DataLens"
         },
         {
-          title: "SARATHI PLATFORM (SIH 2025)",
-          tag: "PWA / SAFETY TECH",
-          desc: "Smart tourism PWA with offline interactive maps, emergency SOS, and multilingual navigation for travelers.",
-          tech: ["JavaScript", "Leaflet Maps", "Service Workers"],
+          title: "SARATHI – SMART TOURISM & NAVIGATION (SIH 2025)",
+          tag: "PWA / GIS & NAVIGATION",
+          desc: "Led architecture of a fault-tolerant PWA for tourism safety, using offline-first Service Worker caching, Leaflet GIS mapping, multi-threaded SOS dispatch, and Dijkstra-based path optimization for 99.9% uptime.",
+          tech: ["JavaScript", "PWA", "Service Workers", "Leaflet GIS", "HTML5", "CSS3"],
           github: "https://github.com/varunsai20-a11y/sih-2025",
           liveDemo: "https://sih-2025-gamma.vercel.app/"
-        },
-        {
-          title: "PROPERTYHUB PLATFORM",
-          tag: "REAL ESTATE / FULL-STACK",
-          desc: "Full-stack real estate marketplace platform featuring property listings, search filters, interactive mapping, and user account management.",
-          tech: ["React.js", "Node.js", "Express", "MongoDB"],
-          github: "https://github.com/varunsai20-a11y/propertyhub",
-          liveDemo: "https://propertyhub-coral.vercel.app/"
         }
       ]
     },
@@ -263,15 +255,15 @@ export const portfolioConfig = {
       timeline: [
         {
           period: "March 2025 – May 2025",
-          role: "ML & Computer Vision Intern",
-          org: "College Internship Project",
-          detail: "Trained CNN image classifier on 5,000+ labeled dataset achieving 92% classification accuracy using OpenCV."
+          role: "ML Intern — Image Classification Project",
+          org: "Jain University, Bengaluru",
+          detail: "Architected and trained an end-to-end CNN pipeline on 5,000+ multi-class image samples, achieving 92% classification accuracy and reducing validation loss by 15%. Engineered high-throughput image preprocessing and automated data augmentation pipelines using OpenCV and NumPy."
         },
         {
-          period: "2023 – 2027",
-          role: "Undergraduate Scholar",
-          org: "Jain University, Bengaluru",
-          detail: "Bachelor of Technology in CSE with AI & Data Engineering specialization (CGPA: 8.41/10.0)."
+          period: "2023 – 2027 (Expected)",
+          role: "B.Tech in Computer Science and Engineering",
+          org: "Jain University, Bengaluru, India",
+          detail: "Bachelor of Technology in Computer Science and Engineering (CGPA: 8.41 / 10.0 up to Semester VI)."
         }
       ]
     },
@@ -286,21 +278,21 @@ export const portfolioConfig = {
         {
           badge: "RESEARCH LEAD",
           title: "Research Lead — DATA.AI Club",
-          org: "Jain University (FET)",
-          date: "Feb 2026",
-          tagline: "Leadership & Advanced R&D",
-          details: "Leading research wing, ML experimentation, and problem frameworks for datathons.",
-          desc: "Leading research wing, ML experimentation, and problem frameworks for datathons.",
+          org: "Jain University",
+          date: "Ongoing",
+          tagline: "Leadership & Technical Events",
+          details: "Organized and spearheaded 2+ department-wide technical coding events and workshops for 150+ participants.",
+          desc: "Organized and spearheaded 2+ department-wide technical coding events and workshops, driving engagement for 150+ participants while directing competitive problem statement design and research tracks.",
           category: "Leadership"
         },
         {
           badge: "HACKATHON",
           title: "Smart India Hackathon (SIH 2025)",
-          org: "MoE Innovation Cell",
-          date: "Sept 2025",
-          tagline: "24-Hour National Hackathon",
-          details: "24-hr Internal Smart India Hackathon participation developing traveler safety systems.",
-          desc: "24-hr Internal Smart India Hackathon participation developing traveler safety systems.",
+          org: "Jain University",
+          date: "2025",
+          tagline: "24-Hour Internal Hackathon",
+          details: "Participated in the 24-hour Internal SIH 2025 Hackathon at Jain University.",
+          desc: "Participated in the 24-hour Internal SIH 2025 Hackathon at Jain University, developing resilient tourism & safety infrastructure.",
           category: "Hackathon"
         },
         {
@@ -309,40 +301,50 @@ export const portfolioConfig = {
           org: "IBM & Shooting Stars Foundation",
           date: "2025",
           tagline: "Global Datathon Event",
-          details: "Global Datathon Event participant at Kshitij Techno-Management fest.",
-          desc: "Global Datathon Event participant at Kshitij Techno-Management fest.",
+          details: "Recognized for active participation in the global datathon.",
+          desc: "Recognized for active participation in the global datathon by IBM and Shooting Stars Foundation.",
           category: "Datathon"
         },
         {
           badge: "ACADEMY",
-          title: "Student Development Program on Java",
-          org: "E & ICT Academy, IIT Kanpur (MeitY)",
-          date: "Jan 2024",
-          tagline: "Advanced Java & Core Systems",
-          details: "Completed month-long development program on Java architecture.",
-          desc: "Completed month-long development program on Java architecture.",
+          title: "IIT Kanpur (MeitY) SDP",
+          org: "E & ICT Academy, IIT Kanpur",
+          date: "Completed",
+          tagline: "Java Student Development Program",
+          details: "Completed Student Development Program on Java.",
+          desc: "Completed Student Development Program on Java via E & ICT Academy, IIT Kanpur.",
           category: "Academy"
         },
         {
           badge: "CLOUD MENTEE",
           title: "Cloud Computing Mentorship",
-          org: "Launched Global (ID: LEDCC8136)",
+          org: "Launched Global",
           date: "Verified",
-          tagline: "Cloud Architecture & Services",
-          details: "Hands-on mentorship covering cloud deployment & architecture.",
-          desc: "Hands-on mentorship covering cloud deployment & architecture.",
+          tagline: "Cloud Computing Mentorship",
+          details: "Completed certified Mentorship Program in Cloud Computing.",
+          desc: "Completed certified Mentorship Program in Cloud Computing.",
           category: "Mentorship"
         },
         {
-          id: "trophy-06",
+          badge: "COURSERA",
+          title: "Coursera Certifications",
+          org: "Coursera",
+          date: "Certified",
+          tagline: "Google Cloud, Networking & NLP",
+          details: "Certifications in Google Cloud Data Analytics, Data Warehousing, Cisco Networking, and NLP.",
+          desc: "Completed certifications in Google Cloud Data Analytics, Data Warehousing, Cisco Networking, and NLP.",
+          category: "Certifications"
+        },
+        {
+          id: "trophy-07",
           badge: "LEETCODE 200+",
           title: "200+ LeetCode Problems Solved",
-          org: "LeetCode (@varun_s04)",
-          organization: "LeetCode (@varun_s04)",
-          date: "Live Updates",
-          tagline: "Data Structures & Algorithms",
-          details: "Solved 200+ algorithmic challenges across Easy, Medium, and Hard topics with high acceptance rate.",
-          desc: "Solved 200+ algorithmic challenges across Easy, Medium, and Hard topics with high acceptance rate.",
+          org: "LeetCode",
+          organization: "LeetCode",
+          date: "Verified",
+          tagline: "Java & Python Algorithms",
+          details: "Solved 200+ leetcode problems in Java and Python.",
+          desc: "Solved 200+ leetcode problems in Java and Python covering data structures and core algorithms.",
           category: "LeetCode",
           isLeetCode: true,
           leetcodeUsername: "varun_s04"
