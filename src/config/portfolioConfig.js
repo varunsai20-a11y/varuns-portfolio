@@ -4,7 +4,7 @@ export const portfolioConfig = {
     logoTitle: "VARUN BUILDS",
     subtitle: "Portfolio",
     title: "AI & Data Engineering Developer",
-    bio: "Builds practical, production-ready data systems that bridge deep learning models with full-stack delivery—from sub-second NLP and time-series inference engines to fault-tolerant PWAs with offline caching and dynamic GIS routing.",
+    bio: "Computer Science student focused on AI, data systems, and full-stack development, with experience spanning deep learning, code intelligence, data analytics, and fault-tolerant web applications.",
     status: "AVAILABLE FOR MISSIONS",
     quote: "Code is my weapon. Creativity is my world.",
     location: "Bengaluru, India",
@@ -60,6 +60,18 @@ export const portfolioConfig = {
     },
     {
       id: "heist-03",
+      title: "CODEGRAPH – GROUNDED ARCHITECTURE INTELLIGENCE ENGINE",
+      category: "AI / CODE INTELLIGENCE & AST",
+      tagline: "AST Analysis & Hybrid RRF Evidence Retrieval",
+      description: "Enables multi-language code intelligence through AST analysis across Go, TypeScript/JavaScript, and Java, supporting automated symbol extraction, dependency mapping, caller/callee analysis, hybrid Reciprocal Rank Fusion (RRF) retrieval, and grounded LLM explanations with SQLite WAL persistence.",
+      techStack: ["Go", "TypeScript", "JavaScript", "Java", "AST", "SQLite", "RRF", "REST APIs"],
+      githubUrl: "https://github.com/varunsai20-a11y/codegraph",
+      liveDemoUrl: "https://wa.me/918660224417?text=Hi%20Varun,%20I'm%20interested%20in%20CodeGraph",
+      whatsappUrl: "https://wa.me/918660224417?text=Hi%20Varun,%20I'm%20interested%20in%20CodeGraph",
+      difficulty: "Five Stars"
+    },
+    {
+      id: "heist-04",
       title: "SARATHI – SMART TOURISM & NAVIGATION (SIH 2025)",
       category: "PWA / GIS & NAVIGATION",
       tagline: "Resilient Offline Navigation System",
@@ -67,6 +79,7 @@ export const portfolioConfig = {
       techStack: ["JavaScript", "PWA", "Service Workers", "Leaflet GIS", "HTML5", "CSS3"],
       githubUrl: "https://github.com/varunsai20-a11y/sih-2025",
       liveDemoUrl: "https://sih-2025-gamma.vercel.app/",
+      whatsappUrl: "https://wa.me/918660224417?text=Hi%20Varun,%20I'm%20interested%20in%20Sarathi",
       difficulty: "Five Stars"
     }
   ],
@@ -236,12 +249,22 @@ export const portfolioConfig = {
           liveDemo: "https://github.com/varunsai20-a11y/DataLens"
         },
         {
+          title: "CODEGRAPH – GROUNDED ARCHITECTURE INTELLIGENCE ENGINE",
+          tag: "AI / CODE INTELLIGENCE & AST",
+          desc: "Enables multi-language code intelligence through AST analysis across Go, TypeScript/JavaScript, and Java, supporting automated symbol extraction, dependency mapping, caller/callee analysis, hybrid Reciprocal Rank Fusion (RRF) retrieval, and grounded LLM explanations with SQLite WAL persistence.",
+          tech: ["Go", "TypeScript", "JavaScript", "Java", "AST", "SQLite", "REST APIs"],
+          github: "https://github.com/varunsai20-a11y/codegraph",
+          liveDemo: "https://wa.me/918660224417?text=Hi%20Varun,%20I'm%20interested%20in%20CodeGraph",
+          whatsappUrl: "https://wa.me/918660224417?text=Hi%20Varun,%20I'm%20interested%20in%20CodeGraph"
+        },
+        {
           title: "SARATHI – SMART TOURISM & NAVIGATION (SIH 2025)",
           tag: "PWA / GIS & NAVIGATION",
           desc: "Led architecture of a fault-tolerant PWA for tourism safety, using offline-first Service Worker caching, Leaflet GIS mapping, multi-threaded SOS dispatch, and Dijkstra-based path optimization for 99.9% uptime.",
           tech: ["JavaScript", "PWA", "Service Workers", "Leaflet GIS", "HTML5", "CSS3"],
           github: "https://github.com/varunsai20-a11y/sih-2025",
-          liveDemo: "https://sih-2025-gamma.vercel.app/"
+          liveDemo: "https://sih-2025-gamma.vercel.app/",
+          whatsappUrl: "https://wa.me/918660224417?text=Hi%20Varun,%20I'm%20interested%20in%20Sarathi"
         }
       ]
     },

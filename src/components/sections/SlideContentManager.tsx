@@ -373,28 +373,30 @@ export default function SlideContentManager({
                       ))}
                     </div>
 
-                    {/* Row 4: Actions — text links redirected to Safehouse / WhatsApp Appointment */}
+                    {/* Row 4: Actions — direct links */}
                     <div className="flex items-center gap-5 flex-wrap">
+                      {proj.github && (
+                        <a
+                          href={proj.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 text-gta-yellow hover:text-white transition-colors"
+                        >
+                          <Github size={13} />
+                          <span className="font-hud text-[10px] tracking-widest font-bold">
+                            ► GITHUB REPO
+                          </span>
+                        </a>
+                      )}
                       <a
-                        href={`https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20request%20code%20access%20/%20schedule%20appointment%20for%20project:%20${encodeURIComponent(proj.title)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-gta-yellow hover:text-white transition-colors"
-                      >
-                        <MessageSquare size={13} />
-                        <span className="font-hud text-[10px] tracking-widest font-bold">
-                          ► REQUEST CODE (WHATSAPP / SAFEHOUSE)
-                        </span>
-                      </a>
-                      <a
-                        href={`https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20schedule%20a%20live%20demo%20appointment%20for:%20${encodeURIComponent(proj.title)}`}
+                        href={proj.whatsappUrl || `https://wa.me/918660224417?text=Hi%20Varun,%20I'd%20like%20to%20inquire%20about%20project:%20${encodeURIComponent(proj.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 text-gta-cyan hover:text-white transition-colors"
                       >
-                        <ExternalLink size={13} />
+                        <MessageSquare size={13} />
                         <span className="font-hud text-[10px] tracking-widest font-bold">
-                          ► SCHEDULE LIVE DEMO
+                          ► WHATSAPP REDIRECT
                         </span>
                       </a>
                     </div>

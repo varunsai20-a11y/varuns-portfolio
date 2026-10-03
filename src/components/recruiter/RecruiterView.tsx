@@ -430,25 +430,29 @@ export default function RecruiterView({ onSwitchToGTA }: RecruiterViewProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 pt-5 mt-4 border-t border-slate-800/40">
+                <div className="flex items-center gap-3 pt-5 mt-4 border-t border-slate-800/40 flex-wrap">
                   {project.githubUrl && (
                     <a
-                      href="#contact"
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`flex items-center gap-1.5 text-xs font-semibold hover:text-blue-500 transition-colors ${
                         isDark ? "text-slate-300" : "text-slate-700"
                       }`}
                     >
                       <Github size={14} />
-                      <span>Request Code / GitHub</span>
+                      <span>GitHub Repository</span>
                     </a>
                   )}
 
-                  {project.liveDemoUrl && (
+                  {(project.whatsappUrl || project.liveDemoUrl) && (
                     <a
-                      href="#contact"
-                      className="flex items-center gap-1.5 text-xs font-semibold text-blue-500 hover:underline ml-auto"
+                      href={project.whatsappUrl || project.liveDemoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs font-semibold text-emerald-500 hover:underline ml-auto"
                     >
-                      <span>Request Live Demo</span>
+                      <span>{(project.whatsappUrl || project.liveDemoUrl)?.includes("wa.me") ? "WhatsApp Direct Redirect" : "Live Demo"}</span>
                       <ExternalLink size={13} />
                     </a>
                   )}

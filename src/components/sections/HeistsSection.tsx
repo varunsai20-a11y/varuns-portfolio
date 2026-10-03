@@ -109,23 +109,25 @@ export default function HeistsSection() {
 
                 {/* Actions */}
                 <div className="flex gap-3 flex-wrap">
+                  {mission.githubUrl && (
+                    <a
+                      href={mission.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="gta-btn text-xs flex items-center gap-2 px-4 py-2"
+                    >
+                      <Github size={14} />
+                      GITHUB REPO
+                    </a>
+                  )}
                   <a
-                    href={`https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20request%20code%20access%20/%20schedule%20appointment%20for%20project:%20${encodeURIComponent(mission.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="gta-btn text-xs flex items-center gap-2 px-4 py-2"
-                  >
-                    <MessageSquare size={14} />
-                    REQUEST CODE
-                  </a>
-                  <a
-                    href={`https://wa.me/8660224417?text=Hi%20Varun,%20I'd%20like%20to%20schedule%20a%20live%20demo%20appointment%20for:%20${encodeURIComponent(mission.title)}`}
+                    href={mission.whatsappUrl || `https://wa.me/918660224417?text=Hi%20Varun,%20I'd%20like%20to%20inquire%20about%20project:%20${encodeURIComponent(mission.title)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="border border-gta-cyan/40 text-gta-cyan px-4 py-2 font-hud text-xs tracking-wider hover:bg-gta-cyan/10 transition-colors flex items-center gap-2"
                   >
-                    <ExternalLink size={14} />
-                    SCHEDULE DEMO
+                    <MessageSquare size={14} />
+                    WHATSAPP REDIRECT
                   </a>
                 </div>
               </div>
